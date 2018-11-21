@@ -1,6 +1,6 @@
 # CS202
 
-This project is about making a Crossing-Road Game with C++
+This project is about making a Crossing-Road Game on C++ Console
 Our members:
 1. Nguyen Minh Huy
 2. Nguyen Huynh Tuan Duy
