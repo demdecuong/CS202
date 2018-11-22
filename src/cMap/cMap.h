@@ -12,12 +12,12 @@ using namespace std;
 
 class cMap
 {
-    const int width = 300, height = 300;
-    char map[301][301];
-    cPlayer player;
-    cRows rowsData;
-    cLevel level;
-
+   	//old figure: width=height =300
+	const int width = 115, height = 35;
+	char map[116][36];
+	cPlayer player;
+	cRows rowsData;
+	cLevel level;
 public:
     cMap();
     ~cMap();
