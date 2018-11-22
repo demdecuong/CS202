@@ -4,6 +4,9 @@
 class cPosition {
   int X, Y;
 public:
+  int getX();
+	int getY();
+  
   cPosition() {};
   ~cPosition() {};
 };
