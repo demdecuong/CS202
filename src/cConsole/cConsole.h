@@ -1,6 +1,9 @@
 #ifndef _console_header
 #define _console_header
-
+#include <iostream>
+#include <Windows.h>
+#include <conio.h>
+#include <time.h>
 
 #define ColorCode_Back			0
 #define ColorCode_DarkBlue		1
