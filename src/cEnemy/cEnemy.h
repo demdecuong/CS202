@@ -6,8 +6,16 @@
 class cEnemy
 {
 private:
-  int yCordinate;
+	cPosition point;
 public:
+	int getX()
+	{
+		return point.getX();
+	}
+	int getY()
+	{
+		return point.getY();
+	}
   cEnemy() = default;
   ~cEnemy() = default;
   virtual void draw() =0;
