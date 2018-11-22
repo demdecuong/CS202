@@ -15,6 +15,7 @@ private:
 public:
     cOneRow() = default;
     ~cOneRow() = default;
+    bool pushEnemy(cEnemy* newEnemy); // push a new new enemy
 };
 
 #endif // cOneRow

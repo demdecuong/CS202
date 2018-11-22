@@ -7,18 +7,19 @@
 class cPlayer
 {
 private:
-  cPosition pos;
-  bool isDead;
+    cPosition pos;
+    bool isDead;
 public:
-  cPlayer(/* args */);
-  ~cPlayer();
-  void Up();
-  void Down();
-  void Right();
-  void Left();
-  bool checkIsDead();
-  void draw();
-  bool crash(cEnemy);
+    cPlayer(/* args */);
+    ~cPlayer();
+    void Up();
+    void Down();
+    void Right();
+    void Left();
+    bool checkIsDead();
+    void killPlayer(); // set isDead
+    void draw();
+    bool crash(cEnemy);
 };
 
 #endif // cPlayer
