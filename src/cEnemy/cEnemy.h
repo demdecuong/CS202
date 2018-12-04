@@ -2,6 +2,8 @@
 #ifndef cEnemy_h
 #define cEnemy_h
 
+#include "../cPosition/cPosition.h"
+
 
 class cEnemy
 {
@@ -17,8 +19,10 @@ public:
 		return point.getY();
 	}
   cEnemy() = default;
+  cEnemy(cPosition st); // create new enemy with starting position
   ~cEnemy() = default;
-  virtual void draw() =0;
+//  virtual void draw() =0;
+  virtual char ** shape() =0; // return the shape of enemy to draw
   virtual void sound() =0;
 };
 

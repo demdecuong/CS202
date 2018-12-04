@@ -22,7 +22,7 @@ public:
     cMap();
     ~cMap();
     void resetMap(); // reset the map to default with no enemy and no player
-    void printMap();
+    void printMap(); // print map to screen
     bool draw(cPosition pos,char shape[301][301], int w, int h); // draw from position pos(x, y) shape(w, h)
     void drawPlayer(); // draw player to map, check if crash => kill player
     void drawEnemies(cEnemy enemy); // draw enemy to map

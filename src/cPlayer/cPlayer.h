@@ -16,7 +16,7 @@ public:
     void Down();
     void Right();
     void Left();
-    bool checkIsDead();
+//    bool checkIsDead();
     void killPlayer(); // set isDead
     void draw();
     bool crash(cEnemy);
