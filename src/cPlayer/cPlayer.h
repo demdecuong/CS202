@@ -1,25 +1,32 @@
 #ifndef cPlayer_h
 #define cPlayer_h
 
+#include <stdio.h>
 #include "../cPosition/cPosition.h"
-#include "../cEnemy/cEnemy.h"
+//#include "../cEnemy/cEnemy.h"
 
 class cPlayer
 {
 private:
-    cPosition pos;
-    bool isDead;
+  cPosition pos;
+  bool isDead;
+  char ** a;
+  int width, height;
 public:
-    cPlayer(/* args */);
-    ~cPlayer();
-    void Up();
-    void Down();
-    void Right();
-    void Left();
+  cPlayer() = default;
+  ~cPlayer() = default;
+  void Up();
+  void Down();
+  void Right();
+  void Left();
 //    bool checkIsDead();
-    void killPlayer(); // set isDead
-    void draw();
-    bool crash(cEnemy);
+  void killPlayer(); // set isDead
+  void draw();
+  char ** shape();
+  cPosition getPos();
+  int getWidth();
+  int getHeight();
+//    bool crash(cEnemy);
 };
 
 #endif // cPlayer
