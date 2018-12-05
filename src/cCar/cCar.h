@@ -4,9 +4,13 @@
 
 class cCar : public cEnemy 
 {
+	char **a; //a[3][8]
 public:
-	void draw();
+	char ** shape();
 	void sound();
+	void test();
+	cCar();
+	~cCar();
+
 };
 #endif // !cCar_h
-
