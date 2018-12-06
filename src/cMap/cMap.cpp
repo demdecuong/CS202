@@ -28,6 +28,15 @@ void cMap::printMap()
     }
 }
 
+void cMap::drawMap() {
+  resetMap();
+  vector <cEnemy*> enemyList = rowsData.listEnemy();
+  for (int i = 0; i < (int)enemyList.size(); ++i) {
+    drawEnemies(enemyList[i]);
+  }
+  drawPlayer();
+}
+
 int cMap::draw(cPosition pos, char ** shape, int w, int h) {
   int X = pos.getX();
   int Y = pos.getY();
@@ -60,7 +69,45 @@ void cMap::drawPlayer() {
 }
 
 void cMap::initializeNewState() {
+  srand((unsigned int)time(NULL));
   player = cPlayer();
   rowsData = cRows();
-  // create initial status
+  int padding[10];
+  for (int i = 0; i < 10; ++i) {
+    padding[i] = 0;
+    int speed = rand() % level.getMaxSpeed();
+    bool direction = rand() % 2;
+    bool redLight = rand() % 2;
+    rowsData.pushRow(new cOneRow(speed, direction, redLight));
+  }
+  cEnemy * newEnemy;
+  cPosition pos;
+  while (true) {
+    int rRow = (rand() % 10) + 1;
+    padding[rRow] += (rand() % 20) + 1;
+    pos = cPosition((rRow - 1) * 3 + 1, padding[rRow]);
+    newEnemy = level.randNewEnemy(pos);
+    if (!newEnemy) break;
+    rowsData.pushEnemy(rRow, newEnemy);
+  }
+  drawMap();
+}
+
+void cMap::randomNextState() {
+  int t = rand(); // this will be get from global clock
+  rowsData.moveToNextState(t);
+  cEnemy * newEnemy;
+  cPosition pos;
+  int tryCount = 10000;
+  while (tryCount--) {
+    int rRow = (rand() % 10) + 1;
+    pos = cPosition((rRow - 1) * 3 + 1, -1);
+    newEnemy = level.randNewEnemy(pos);
+    if (!newEnemy) break;
+    if (!rowsData.pushEnemy(rRow, newEnemy)) {
+      level.decNEnemy();
+      delete newEnemy;
+    };
+  }
+  drawMap();
 }

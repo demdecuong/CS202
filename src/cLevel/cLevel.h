@@ -2,6 +2,8 @@
 #define cLevel_h
 
 #include <algorithm>
+#include "../cPosition/cPosition.h"
+#include "../cEnemy/cEnemy.h"
 
 using namespace std;
 
@@ -18,6 +20,9 @@ public:
   cLevel(int level, int nEnemy);
 //  ~cLevel();
   void newLevel(int lv);
+  int getMaxSpeed();
+  cEnemy * randNewEnemy(cPosition pos);
+  void decNEnemy();
 };
 
 #endif // cLevel

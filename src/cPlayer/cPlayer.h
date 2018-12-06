@@ -13,7 +13,8 @@ private:
   char ** a;
   int width, height;
 public:
-  cPlayer() = default;
+  cPlayer() = default; // set default position
+  cPlayer(cPosition pos); // set current position when load game
   ~cPlayer() = default;
   void Up();
   void Down();
