@@ -1,5 +1,5 @@
 #include "cMap.h"
-//#include "cConsole.h"
+#include "cConsole.h"
 
 cMap::cMap() {
     resetMap();
