@@ -82,7 +82,8 @@ void cMap::initializeNewState() {
   }
   cEnemy * newEnemy;
   cPosition pos;
-  while (true) {
+  int tryCount = 10000;
+  while (tryCount--) {
     int rRow = (rand() % 10) + 1;
     padding[rRow] += (rand() % 20) + 1;
     pos = cPosition((rRow - 1) * 3 + 1, padding[rRow]);
@@ -100,8 +101,8 @@ void cMap::randomNextState() {
   cPosition pos;
   int tryCount = 10000;
   while (tryCount--) {
-    int rRow = (rand() % 10) + 1;
-    pos = cPosition((rRow - 1) * 3 + 1, -1);
+    int rRow = rand() % 10;
+    pos = cPosition((rRow  * 3) + 1, -1);
     newEnemy = level.randNewEnemy(pos);
     if (!newEnemy) break;
     if (!rowsData.pushEnemy(rRow, newEnemy)) {
