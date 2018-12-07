@@ -1,10 +1,10 @@
 #include "cMap.h"
-#include "cConsole.h"
+ #include "cConsole.h"
 
 void cMap::printMap()
 {
 	int temp1 = width, temp2 = height;
-	TextColor(14);
+     TextColor(14);
 	cout << " " << (char)218;
 	for (int i = 0; i<width; i++)
 		cout << (char)196;

@@ -28,7 +28,7 @@ public:
     void drawEnemies(cEnemy enemy); // draw enemy to map
     void randomNextState(); // generate new enemies base on level and push to rows
     void initializeNewState(); // intialize a new map base on level, reset player state
-    void handleKeyInput(); // receive key input from cGame and call appropriate function
+    void handleKeyInput(); // receive key input from ccGame and call appropriate function
 };
 
 #endif // cMap

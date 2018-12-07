@@ -3,23 +3,30 @@
 
 #include "../cPosition/cPosition.h"
 #include "../cEnemy/cEnemy.h"
+#include "../cBird/cBird.h"
+#include "../cCar/cCar.h"
+#include "../cDinausor/cDinausor.h"
+#include "../cTruck/cTruck.h"
+#include "../cConsole/cConsole.h"
+#include <cmath>
 
-class cPlayer
-{
+class cPlayer: public cPosition{
 private:
     cPosition pos;
     bool isDead;
 public:
     cPlayer(/* args */);
-    ~cPlayer();
+    cPlayer(int,int);
+    ~cPlayer(){ };
     void Up();
     void Down();
     void Right();
     void Left();
-//    bool checkIsDead();
+    bool checkIsDead();
     void killPlayer(); // set isDead
-    void draw();
-    bool crash(cEnemy);
+    void reset();
+    void deleteChar();
+    bool crash(cTruck*p, int lv);
 };
 
 #endif // cPlayer

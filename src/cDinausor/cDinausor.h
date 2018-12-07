@@ -1,15 +1,12 @@
 
-#ifndef cDino_h
-#define cDino_h
+#ifndef cDinausor_h
+#define cDinausor_h
 #include "cEnemy.h"
-class cDinosaur : public cEnemy
+
+class cDinausor : public cEnemy
 {
-	char **a; //a[3][6]
 public:
-	char ** shape();
-	void sound();
-	void test();
-	cDinosaur();
-	~cDinosaur();
+    void draw();
+    void sound();
 };
-#endif // !cBird_h
+#endif

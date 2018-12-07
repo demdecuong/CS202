@@ -2,13 +2,14 @@
 #define cPosition_h
 
 class cPosition {
-  int X, Y;
+protected:
+    int X, Y;
 public:
-  int getX();
+    int getX();
 	int getY();
-  
-  cPosition() {};
-  ~cPosition() {};
+    cPosition();
+    cPosition(int x, int y);
+    ~cPosition();
 };
 
 #endif // cPosition
