@@ -8,6 +8,7 @@ public:
 	int getY();
   
   cPosition() {};
+  cPosition(int x, int y) : X(x), Y(y){};
   ~cPosition() {};
 };
 
