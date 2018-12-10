@@ -19,6 +19,9 @@ void printLog(string logString) {
 // enemy thread
 // player thread
 // printLog thread
+#include"cEnemy.h"
+#include"cGame.h"
+#include"cConsole.h"
 
 // void inputLoop(int& inputState) {
 //     while (1) {
@@ -57,8 +60,18 @@ int main() {
     // printLog("Running main . . .");
     // cout << "This is main" << endl;
     // return 0;
-  printLog("Running main . . .");
-  cMap map;
-  map.printMap();
-  return 0;
+  // printLog("Running main . . .");
+  // cMap map;
+  // map.printMap();
+  // return 0;
+    FixConsoleWindow();
+    bool reset = false;
+
+    do {
+      startGame(reset, 1);
+    } while (reset);
+    
+    system("pause");
+    
+    return 0;
 }

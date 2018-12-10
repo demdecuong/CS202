@@ -1,15 +1,25 @@
+
 #ifndef cTruck_h
 #define cTruck_h
-#include "cEnemy.h"
+#include "../cEnemy/cEnemy.h"
+
 
 class cTruck : public cEnemy
 {
-	char** a; //a[3][8]
+	int x, y;
 public:
-	char **shape();
-	void sound();
-	void test();
-	cTruck();
-	~cTruck();
+	void draw();
+  void sound();
+  void deleteChar();
+  void move();
+  int getX() {
+	  x = cEnemy::getX();
+	  return x;
+  }
+
+  int getY() {
+	  y = cEnemy::getY();
+	  return y;
+  }
 };
 #endif 

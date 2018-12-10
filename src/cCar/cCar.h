@@ -1,16 +1,25 @@
 #ifndef cCar_h
 #define cCar_h
-#include "cEnemy.h"
+#include "../cEnemy/cEnemy.h"
 
 class cCar : public cEnemy 
 {
-	char **a; //a[3][8]
+private:
+	int x, y;
 public:
-	char ** shape();
+	void draw();
 	void sound();
-	void test();
-	cCar();
-	~cCar();
+	void deleteChar();
+	void move();
+	int getX() {
+		x = cEnemy::getX();
+		return x;
+	}
 
+	int getY() {
+		y = cEnemy::getY();
+		return y;
+	}
 };
 #endif // !cCar_h
+

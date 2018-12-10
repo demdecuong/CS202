@@ -1,16 +1,24 @@
 
 #ifndef cBird_h
 #define cBird_h
-#include "cEnemy.h"
+#include "../cEnemy/cEnemy.h"
+
 class cBird : public cEnemy
 {
-	char **a; //a[3][6]
+	int x, y;
 public:
-	void draw();
-	char ** shape();
-	void sound();
-	void test();
-	cBird();
-	~cBird();
+    void draw();
+    void sound();
+	void deleteChar();
+	void move();
+	int getX() {
+		x = cEnemy::getX();
+		return x;
+	}
+
+	int getY() {
+		y = cEnemy::getY();
+		return y;
+	}
 };
-#endif // !cBird_h
+#endif

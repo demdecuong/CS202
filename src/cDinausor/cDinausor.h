@@ -1,15 +1,24 @@
 
-#ifndef cDino_h
-#define cDino_h
-#include "cEnemy.h"
-class cDinosaur : public cEnemy
+#ifndef cDinausor_h
+#define cDinausor_h
+#include "../cEnemy/cEnemy.h"
+
+class cDinausor : public cEnemy
 {
-	char **a; //a[3][6]
+	int x, y;
 public:
-	char ** shape();
-	void sound();
-	void test();
-	cDinosaur();
-	~cDinosaur();
+    void draw();
+    void sound();
+	void deleteChar();
+	void move();
+	int getX() {
+		x = cEnemy::getX();
+		return x;
+	}
+
+	int getY() {
+		y = cEnemy::getY();
+		return y;
+	}
 };
-#endif // !cBird_h
+#endif

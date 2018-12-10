@@ -1,84 +1,37 @@
-#include "cTruck.h"
-#include "cConsole.h"
+
+#include "../cTruck/cTruck.h"
+#include "../cConsole/cConsole.h"
 using namespace std;
 
-char **cTruck::shape()
+void cTruck::draw()
 {
-	//Row1
-	a[0][0] = (char)218;
-	for (int i = 1; i < 7; i++)
-		a[0][i] = char(196);
-	a[0][7] = (char)191;
-	//Row2
-	a[1][0] = (char)179;
-	for (int i = 1; i < 8; i++)
-	{
-		if (i == 6)a[1][i] = '[';
-		else if (i == 7)a[1][i] = (char)179;
+	
+	int x = cTruck::cEnemy::getX();
+	int y = cTruck::cEnemy::getY();
+	gotoXY(x , y);
+	cout << (char)218;
+	for (int i = 0; i < 6; i++)
+		cout << char(196);	
+	cout << (char)191;
+	
+	//cout << endl;
+	gotoXY(x,y+1);
+	cout << (char)179 << "     [" << (char)179;
+	//cout << endl;
+	gotoXY(x, y+2);
+	cout << (char)192;
+	for (int i = 0; i < 6; i++) {
+		if (i == 0 || i == 5)cout << "O";
 		else
-			a[1][i] = ' ';
+			cout << (char)196;
 	}
-	//Row3
-	a[2][0] = (char)192;
-	for (int i = 1; i < 7; i++) {
-		if (i == 1 || i == 6)a[2][i] = 'O';
-		else
-			a[2][i] = (char)196;
-	}
-	a[2][7] = (char)217;
-
-	return a;
-}; 
-void cTruck::sound()
-{
-	PlaySound(TEXT("carstarthonkbackfire.wav"), NULL, SND_ASYNC);
-}
-cTruck::cTruck()
-{
-	a = new char*[3];
-	for (int i = 0; i < 3; i++)
-	{
-		a[i] = new char[8];
-	}
-}
-cTruck::~cTruck()
-{
-	for (int i = 0; i < 3; i++)
-		delete[] a[i];
-	delete[] a;
+	cout << (char)217;
+	//max_x = 8
 }
 
-void cTruck::test()
-{
-	//Row1
-	a[0][0] = (char)218;
-	for (int i = 1; i < 7; i++)
-		a[0][i] = char(196);
-	a[0][7] = (char)191;
-	//Row2
-	a[1][0] = (char)179;
-	for (int i = 1; i < 8; i++)
-	{
-		if (i == 6)a[1][i] = '[';
-		else if (i == 7)a[1][i] = (char)179;
-		else
-			a[1][i] = ' ';
-	}
-	//Row3
-	a[2][0] = (char)192;
-	for (int i = 1; i < 7; i++) {
-		if (i == 1 || i == 6)a[2][i] = 'O';
-		else
-			a[2][i] = (char)196;
-	}
-	a[2][7] = (char)217;
-
-	for (int i = 0; i < 3; i++)
-	{
-		for (int j = 0; j < 8; j++)
-		{
-			cout << a[i][j];
-		}
-		cout << endl;
-	}
+void cTruck::move() {
+	cEnemy::move();
+}
+void cTruck::deleteChar() {
+	cEnemy::deleteChar();
 }
