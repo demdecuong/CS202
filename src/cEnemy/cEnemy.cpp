@@ -1,7 +1,7 @@
 #include "cEnemy.h"
 
 
-/*
+
 cEnemy::cEnemy() {
 
 	outMap = false;
@@ -45,4 +45,4 @@ int cEnemy::getHeight() {
 
 	return 3;
 
-}*/
+}

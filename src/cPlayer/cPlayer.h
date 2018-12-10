@@ -39,8 +39,8 @@ public:
 
 	~cPlayer() = default;
 	
-	bool crash(Enemy *d) {
-		if (pX == d->getX() && pY == d->getY()) return true;
+	bool crash(cEnemy *d) {
+		if (pX == d->GetX() && pY == d->GetY()) return true;
 		else return false;
 	}
 	

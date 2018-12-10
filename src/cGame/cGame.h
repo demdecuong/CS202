@@ -13,20 +13,20 @@
 
 #include "cPlayer.h"
 
+#include "cEnemy.h"
 
 
-class cGame
 
-{
+class cGame {
 	int level;
 	cPlayer player;
-	Enemy *d;
+	cEnemy *d;
 	bool isPausing = false;
 
 public:
 
 	cGame() {
-		d = new Enemy;
+		d = new cEnemy;
 		isPausing = false; }
 
 	~cGame() { }
@@ -46,7 +46,8 @@ public:
 	void playGame(bool &is_finish); // manage game process: randomNextState, draw (tick time)
 
 	void quitGame(thread *t1, bool &IS_RUNNING);
-	Enemy* getAnimal() {
+
+	cEnemy* getAnimal() {
 		return d;
 	}
 

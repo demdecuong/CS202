@@ -4,16 +4,11 @@
 
 int main() {
 	FixConsoleWindow();
-	cPlayer a;
-	a.draw();
-	int tmp;
-	char moving;
-	cGame b;
-	b.gameSettings();
-	while (true) {
-		tmp = toupper(_getch());
-		moving = tmp;
-		b.updatePosPlayer(moving);
-	}
+	bool reset = false;
+
+	do {
+		startGame(reset, 1);
+	} while (reset);
+	
 	system("pause");
 }

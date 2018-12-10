@@ -11,11 +11,13 @@
 
 
 
-/*class cEnemy
+class cEnemy
 
 {
 
 private:
+
+    int mX=1, mY=5;
 
 	cPosition point;
 
@@ -49,9 +51,9 @@ public:
 
 	//  virtual void draw() =0;
 
-	virtual char ** shape() = 0; // return the shape of enemy to draw
+	//virtual char ** shape() = 0; // return the shape of enemy to draw
 
-	virtual void sound() = 0;
+	//virtual void sound() = 0;
 
 	bool isOutOfMap();
 
@@ -61,11 +63,6 @@ public:
 
 	int getHeight();
 
-};*/
-class Enemy {
-private:
-	int mX=1, mY=5;
-public:
 	void deleteChar() {
 		gotoXY(mX, mY);
 		cout << " ";
@@ -81,16 +78,13 @@ public:
 	void draw() {
 		cout << "D";
 	}
-	int getX() {
+	int GetX() {
 		return mX;
 	}
-	int getY() {
+	int GetY() {
 		return mY;
 	}
-	
 
 };
-
-
 
 #endif // cEnemy
