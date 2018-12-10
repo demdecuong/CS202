@@ -282,7 +282,7 @@ void cGame::saveGame() { // print file of cMap map
 	return;
 }
 
-void togglePauseGame(); // toggle status of isPausing
+//void togglePauseGame(); // toggle status of isPausing
 
 
 void cGame::playGame(bool &is_finish) {
