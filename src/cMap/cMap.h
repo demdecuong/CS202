@@ -30,7 +30,7 @@ public:
   void printMap(); // print map to screen
   int draw(cPosition pos,char ** shape, int w, int h); // draw from position pos(x, y) shape(w, h) | 1: ok, 0: go out of map, -1: crash
     void drawPlayer(); // draw player to map, check if crash => kill player
-//    void drawEnemies(cEnemy enemy); // draw enemy to map
+    void drawEnemies(cEnemy* enemy); // draw enemy to map
     void randomNextState(); // generate new enemies base on level and push to rows
     void initializeNewState(); // intialize a new map base on level, reset player state
     void handleKeyInput(); // receive key input from cGame and call appropriate function

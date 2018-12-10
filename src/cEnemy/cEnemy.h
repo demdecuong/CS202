@@ -4,8 +4,8 @@
 #define cEnemy_h
 
 
-#include"cConsole.h"
-#include "cPosition.h"
+#include "../cConsole/cConsole.h"
+#include "../cPosition/cPosition.h"
 
 
 
@@ -51,7 +51,7 @@ public:
 
 	//  virtual void draw() =0;
 
-	//virtual char ** shape() = 0; // return the shape of enemy to draw
+	virtual char ** shape() = 0; // return the shape of enemy to draw
 
 	//virtual void sound() = 0;
 

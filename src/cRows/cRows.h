@@ -10,16 +10,12 @@
 class cRows
 {
 private:
-//  vector <cOneRow*> subRows;
+    vector <cOneRow*> subRows;
 public:
-<<<<<<< HEAD
     cRows();
-=======
-    cRows() = default;
->>>>>>> cMap-and-cLevel
     ~cRows() = default;
     void pushEnemy(int row, cEnemy* enemy); //  push a new enemy to a row
-//    vector <cEnemy*> listEnemy(); // return all enemies from all rows
+    vector <cEnemy*> listEnemy(); // return all enemies from all rows
 };
 
 #endif // cRows

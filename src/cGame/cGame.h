@@ -7,13 +7,13 @@
 
 #include <iostream>
 
-#include "cMap.h"
+#include "../cMap/cMap.h"
 
-#include "cConsole.h"
+#include "../cConsole/cConsole.h"
 
-#include "cPlayer.h"
+#include "../cPlayer/cPlayer.h"
 
-#include "cEnemy.h"
+#include "../cEnemy/cEnemy.h"
 
 
 
@@ -26,7 +26,7 @@ class cGame {
 public:
 
 	cGame() {
-		d = new cEnemy;
+		d =  0; //new cEnemy;
 		isPausing = false; }
 
 	~cGame() { }

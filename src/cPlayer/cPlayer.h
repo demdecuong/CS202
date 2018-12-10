@@ -3,15 +3,13 @@
 
 #define cPlayer_h
 
-
-#include"cEnemy.h"
 #include <stdio.h>
 
-#include "cPosition.h"
+#include "../cPosition/cPosition.h"
 
-#include "cConsole.h"
+#include "../cConsole/cConsole.h"
 
-//#include "../cEnemy/cEnemy.h"
+#include "../cEnemy/cEnemy.h"
 
 
 
@@ -21,9 +19,9 @@ class cPlayer
 
 private:
 
-	//const cPosition pos(5,10);
+	const cPosition constPos{5,10};
 
-	int pX = 10, pY = 10;
+	// int pX = 10, pY = 10;
 
 	bool isDead;
 
@@ -64,7 +62,7 @@ public:
 
 	char ** shape();
 
-	//cPosition getPos();
+	cPosition getPos();
 
 	int getWidth();
 

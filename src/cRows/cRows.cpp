@@ -10,8 +10,10 @@ void cRows::pushEnemy (int row, cEnemy* enemy) {
 
 vector<cEnemy*> cRows::listEnemy(){
     vector<cEnemy*> listEnemy, tmp;
-    for (int i = 0; i < subRows.size(); i++) {
+    for (int i = 0; (unsigned) i < subRows.size(); i++) {
         tmp = subRows[i]->getEnemy();
         listEnemy.insert(listEnemy.end(),tmp.begin(), tmp.end());
     }
+
+    return listEnemy;
 }

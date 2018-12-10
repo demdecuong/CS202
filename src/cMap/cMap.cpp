@@ -62,6 +62,7 @@ void cMap::drawPlayer() {
 void cMap::initializeNewState() {
   player = cPlayer();
   rowsData = cRows();
+}
   // create initial status
 //  #include "../cConsole/cConsole.h"
 

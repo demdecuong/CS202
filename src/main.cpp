@@ -2,7 +2,9 @@
 #include <fstream>
 #include <string>
 #include <thread>
-#include "./cMap/cMap.h"
+#include"cEnemy/cEnemy.h"
+#include"cGame/cGame.h"
+#include "cMap/cMap.h"
 #include "cConsole/cConsole.h"
 using namespace std;
 
@@ -19,9 +21,7 @@ void printLog(string logString) {
 // enemy thread
 // player thread
 // printLog thread
-#include"cEnemy.h"
-#include"cGame.h"
-#include"cConsole.h"
+
 
 // void inputLoop(int& inputState) {
 //     while (1) {
