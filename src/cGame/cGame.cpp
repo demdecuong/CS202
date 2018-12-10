@@ -343,7 +343,7 @@ void cGame::updatePosPlayer(char moving) {
 	else return;
 }
 
-void startGame(bool &reset, int level) {
+void 	startGame(bool &reset, int level) {
 	cGame cg;
 	bool is_finish = false;
 	cg.menu(is_finish);

@@ -29,6 +29,7 @@ void printLog(string logString) {
 //     }
 // }
 int main() {
+    FixConsoleWindow();
     // cGame game;
     // game.newGame();
 
@@ -64,14 +65,14 @@ int main() {
   // cMap map;
   // map.printMap();
   // return 0;
-    FixConsoleWindow();
-    bool reset = false;
+  
+    // bool reset = false;
 
-    do {
-      startGame(reset, 1);
-    } while (reset);
+    // do {
+      // startGame(reset, 1);
+    // } while (reset);
     
-    system("pause");
+    // system("pause");
     
     return 0;
 }
