@@ -26,29 +26,33 @@ void printLog(string logString) {
 //     }
 // }
 int main() {
-    cGame game;
-    game.newGame();
-    cPlayer player;
-    player.draw();
-    int inputState;
-    while (1) {
-        inputState = inputKey();
-        if (inputState  == 'P') {
-            game.togglePauseGame();
-        }
-        if (inputState == 'W') {
-            player.Up();
-        }
-        if (inputState == 'S') {
-            player.Down();
-        }
-        if (inputState == 'A') {
-            player.Left();
-        }
-        if (inputState == 'D') {
-            player.Right();
-        }
-    }
+    // cGame game;
+    // game.newGame();
+
+    // thread gameThread(game.playGame);
+    // gameThread.detach();
+
+    // cPlayer player;
+    // player.draw();
+    // int inputState;
+    // while (1) {
+    //     inputState = inputKey();
+    //     if (inputState  == 'P') {
+    //         game.togglePauseGame();
+    //     }
+    //     if (inputState == 'W') {
+    //         player.Up();
+    //     }
+    //     if (inputState == 'S') {
+    //         player.Down();
+    //     }
+    //     if (inputState == 'A') {
+    //         player.Left();
+    //     }
+    //     if (inputState == 'D') {
+    //         player.Right();
+    //     }
+    // }
 
     // printLog("Running main . . .");
     // cout << "This is main" << endl;
