@@ -15,7 +15,7 @@ public:
     cRows();
     ~cRows() = default;
     void pushEnemy(int row, cEnemy* enemy); //  push a new enemy to a row
-    vector <cEnemy*> listEnemy(); // return all enemies from all rows
+    vector <cEnemy*> listEnemy(); // return all enemies from all rowsgit ad
     void moveToNextState(int t) {};
 };
 
