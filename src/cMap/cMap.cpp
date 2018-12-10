@@ -1,5 +1,5 @@
 #include "cMap.h"
- #include "cConsole.h"
+ #include "../cConsole/cConsole.h"
 
 void cMap::printMap()
 {

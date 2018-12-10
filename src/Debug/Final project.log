@@ -1,0 +1,10 @@
+﻿  cGame.cpp
+cBird.obj : error LNK2019: unresolved external symbol "public: virtual void __thiscall cEnemy::draw(void)" (?draw@cEnemy@@UAEXXZ) referenced in function "public: virtual void __thiscall cEnemy::move(void)" (?move@cEnemy@@UAEXXZ)
+cCar.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall cEnemy::draw(void)" (?draw@cEnemy@@UAEXXZ)
+cTruck.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall cEnemy::draw(void)" (?draw@cEnemy@@UAEXXZ)
+cDinausor.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall cEnemy::draw(void)" (?draw@cEnemy@@UAEXXZ)
+cGame.obj : error LNK2019: unresolved external symbol "public: __thiscall cPosition::~cPosition(void)" (??1cPosition@@QAE@XZ) referenced in function "public: __thiscall cEnemy::~cEnemy(void)" (??1cEnemy@@QAE@XZ)
+cPlayer.obj : error LNK2001: unresolved external symbol "public: __thiscall cPosition::~cPosition(void)" (??1cPosition@@QAE@XZ)
+cGame.obj : error LNK2019: unresolved external symbol "public: __thiscall cMap::cMap(void)" (??0cMap@@QAE@XZ) referenced in function "public: __thiscall cGame::cGame(void)" (??0cGame@@QAE@XZ)
+cGame.obj : error LNK2019: unresolved external symbol "public: __thiscall cMap::~cMap(void)" (??1cMap@@QAE@XZ) referenced in function __unwindfunclet$??0cGame@@QAE@XZ$0
+C:\Users\yuumi\Documents\GitHub\Project-CS202\src\Debug\Final project.exe : fatal error LNK1120: 4 unresolved externals

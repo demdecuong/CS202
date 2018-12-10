@@ -1,15 +1,33 @@
+#pragma once
 #ifndef cPosition_h
+
 #define cPosition_h
 
+
+
 class cPosition {
-protected:
-    int X, Y;
+
+	int X, Y;
+
 public:
-    int getX();
+
+	int getX();
+
 	int getY();
-    cPosition();
-    cPosition(int x, int y);
-    ~cPosition();
+
+
+
+	cPosition() {};
+
+	cPosition(const int x, const int y) {
+		X = x;
+		Y = y;
+	}
+
+	~cPosition() {};
+
 };
+
+
 
 #endif // cPosition

@@ -1,12 +1,10 @@
 
 #include "cCar.h"
-#include "cConsole.h"
+#include "../cConsole/cConsole.h"
 using namespace std;
 
 void cCar::draw()
 {
-	int x = cCar::cEnemy::getX();
-	int y = cCar::cEnemy::getY();
 	gotoXY(x, y);
 	cout << " ";
 	for (int i = 0; i < 5; i++)
@@ -25,3 +23,11 @@ void cCar::draw()
 	}
 	cout << (char)217;
 }
+
+void cCar::move() {
+	cEnemy::move();
+}
+void cCar::deleteChar() {
+	cEnemy::deleteChar();
+}
+

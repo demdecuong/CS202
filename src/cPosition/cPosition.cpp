@@ -1,18 +1,19 @@
 #include "cPosition.h"
 
-cPosition::cPosition(){
-    X = Y = 0;
+
+
+int cPosition::getX()
+
+{
+
+	return X;
+
 }
 
-cPosition::cPosition(int x, int y){
-    X = x;
-    Y = y;
-}
+int cPosition::getY()
 
-int cPosition::getX(){
-    return X;
-}
+{
 
-int cPosition::getY(){
-    return Y;
+	return Y;
+
 }

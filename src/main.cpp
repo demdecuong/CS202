@@ -1,22 +1,19 @@
-#include <iostream>
-#include <fstream>
-#include <string>
-#include "./cMap/cMap.h"
-
-using namespace std;
-
-// print log to log.txt so that we can track easily, should be called in every function
-// only on development
-void printLog(string logString) {
-    ofstream out;
-    out.open("log.txt", ofstream::out | ofstream::app);
-    out << logString << endl;
-    out.close();
-}
-
+#include"cEnemy.h"
+#include"cGame.h"
+#include"cConsole.h"
 
 int main() {
-    printLog("Running main . . .");
-    cout << "This is main" << endl;
-    return 0;
+	FixConsoleWindow();
+	cPlayer a;
+	a.draw();
+	int tmp;
+	char moving;
+	cGame b;
+	b.gameSettings();
+	while (true) {
+		tmp = toupper(_getch());
+		moving = tmp;
+		b.updatePosPlayer(moving);
+	}
+	system("pause");
 }

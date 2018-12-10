@@ -1,6 +1,6 @@
 
-#include "cTruck.h"
-#include "cConsole.h"
+#include "../cTruck/cTruck.h"
+#include "../cConsole/cConsole.h"
 using namespace std;
 
 void cTruck::draw()
@@ -27,4 +27,11 @@ void cTruck::draw()
 	}
 	cout << (char)217;
 	//max_x = 8
+}
+
+void cTruck::move() {
+	cEnemy::move();
+}
+void cTruck::deleteChar() {
+	cEnemy::deleteChar();
 }

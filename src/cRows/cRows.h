@@ -5,17 +5,17 @@
 #include "../cOneRow/cOneRow.h"
 #include "../cEnemy/cEnemy.h"
 
-using namespace std;
+//using namespace std;
 
 class cRows
 {
 private:
-  vector <cOneRow*> subRows;
+//  vector <cOneRow*> subRows;
 public:
     cRows();
     ~cRows();
     void pushEnemy(int row, cEnemy* enemy); //  push a new enemy to a row
-    vector <cEnemy*> listEnemy(); // return all enemies from all rows
+//    vector <cEnemy*> listEnemy(); // return all enemies from all rows
 };
 
 #endif // cRows
