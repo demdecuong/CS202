@@ -33,7 +33,7 @@ public:
 
 	void gameSettings();
 
-	void menu(bool &isFinish); //Bia sua o day
+	void menu(bool &isFinish); 
 
 	void newGame(); // start a new game, initialize cMap map
 
