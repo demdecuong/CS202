@@ -1,8 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <thread>
 #include "./cMap/cMap.h"
-
+#include "cConsole/cConsole.h"
 using namespace std;
 
 // print log to log.txt so that we can track easily, should be called in every function
@@ -14,9 +15,42 @@ void printLog(string logString) {
     out.close();
 }
 
+// control thread = main thread -> no need to detach
+// enemy thread
+// player thread
+// printLog thread
 
+// void inputLoop(int& inputState) {
+//     while (1) {
+//         inputState = inputKey();
+//     }
+// }
 int main() {
-    printLog("Running main . . .");
-    cout << "This is main" << endl;
+    cGame game;
+    game.newGame();
+    cPlayer player;
+    player.draw();
+    int inputState;
+    while (1) {
+        inputState = inputKey();
+        if (inputState  == 'P') {
+            game.togglePauseGame();
+        }
+        if (inputState == 'W') {
+            player.Up();
+        }
+        if (inputState == 'S') {
+            player.Down();
+        }
+        if (inputState == 'A') {
+            player.Left();
+        }
+        if (inputState == 'D') {
+            player.Right();
+        }
+    }
+
+    // printLog("Running main . . .");
+    // cout << "This is main" << endl;
     return 0;
 }

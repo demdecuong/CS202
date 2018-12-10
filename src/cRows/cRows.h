@@ -13,7 +13,7 @@ private:
   vector <cOneRow*> subRows;
 public:
     cRows();
-    ~cRows();
+    ~cRows() = default;
     void pushEnemy(int row, cEnemy* enemy); //  push a new enemy to a row
     vector <cEnemy*> listEnemy(); // return all enemies from all rows
 };

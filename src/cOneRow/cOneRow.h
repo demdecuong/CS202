@@ -2,6 +2,7 @@
 #define cOneRow_h
 
 #include <vector>
+#include <algorithm>
 #include "../cEnemy/cEnemy.h"
 
 using namespace std;
@@ -13,9 +14,10 @@ private:
   bool direction = 0; //0: to the left, 1: to the right
   bool redLight = false;
 public:
-    cOneRow() = default;
+    cOneRow();
     ~cOneRow() = default;
     bool pushEnemy(cEnemy* newEnemy); // push a new new enemy
+    vector<cEnemy*> getEnemy();
 };
 
 #endif // cOneRow
