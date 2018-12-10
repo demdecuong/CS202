@@ -41,7 +41,7 @@ public:
 
 	void saveGame(); // print file of cMap map
 
-	void togglePauseGame(); // toggle status of isPausing
+	//void togglePauseGame(); // toggle status of isPausing
 
 	void playGame(bool &is_finish); // manage game process: randomNextState, draw (tick time)
 
@@ -51,7 +51,7 @@ public:
 		return d;
 	}
 
-	void gameOver();
+	//void gameOver();
 
 	void updatePosPlayer(char moving);
 

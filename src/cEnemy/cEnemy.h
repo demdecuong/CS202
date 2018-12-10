@@ -8,9 +8,6 @@
 #include "../cPosition/cPosition.h"
 
 
-
-
-
 class cEnemy
 
 {
@@ -53,7 +50,7 @@ public:
 
 	virtual char ** shape() = 0; // return the shape of enemy to draw
 
-	//virtual void sound() = 0;
+	virtual void sound() = 0;
 
 	bool isOutOfMap();
 
@@ -63,7 +60,9 @@ public:
 
 	int getHeight();
 
-	void deleteChar() {
+
+	//demo =====================================================
+	void deleteChar() { 
 		gotoXY(mX, mY);
 		cout << " ";
 	}
@@ -84,7 +83,6 @@ public:
 	int GetY() {
 		return mY;
 	}
-
 };
 
 #endif // cEnemy

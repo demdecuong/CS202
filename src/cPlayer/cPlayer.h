@@ -19,28 +19,29 @@ class cPlayer
 
 private:
 
-	const cPosition constPos{5,10};
+	cPosition pos;
 
 	// int pX = 10, pY = 10;
 
 	bool isDead;
 
-	char ** a;
+	char ** a; //[3][5]
 
 	int width=1, height=1;
 
 public:
 
-	cPlayer() = default; // set default position
+	cPlayer(); // set default position
 
 	cPlayer(cPosition pos); // set current position when load game
 
-	~cPlayer() = default;
+	~cPlayer();
 	
-	bool crash(cEnemy *d) {
+	//cai nay demo thoi 
+	/*bool crash(cEnemy *d) { 
 		if (pX == d->GetX() && pY == d->GetY()) return true;
 		else return false;
-	}
+	}*/
 	
 	void Up();
 
@@ -71,8 +72,9 @@ public:
 	//    bool crash(cEnemy);
 
 	void deleteChar();
+
 	bool isFinish() {
-		if (pY == 1) return true; //
+		if (pY == 1) return true; 
 		else return false;
 	}
 
