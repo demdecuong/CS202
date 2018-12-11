@@ -44,7 +44,7 @@ public:
 
 	cEnemy(cPosition st); // create new enemy with starting position
 
-	~cEnemy() = default;
+	virtual ~cEnemy() = default;
 
 	//  virtual void draw() =0;
 

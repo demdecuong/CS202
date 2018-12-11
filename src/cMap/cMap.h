@@ -8,6 +8,7 @@
 #include "../cPosition/cPosition.h"
 #include "../cRows/cRows.h"
 #include "../cLevel/cLevel.h"
+#include "../cConsole/cConsole.h"
 
 //using namespace std;
 

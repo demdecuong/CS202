@@ -21,7 +21,7 @@ private:
 
 	cPosition pos;
 
-	// int pX = 10, pY = 10;
+	int pX = 10, pY = 10;
 
 	bool isDead;
 
@@ -69,7 +69,9 @@ public:
 
 	int getHeight();
 
-	//    bool crash(cEnemy);
+	bool crash(cEnemy* e) {
+		return (abs(getX()-e->getX()) <=4 && abs(getY()-e->getY()) <= 2);
+	}
 
 	void deleteChar();
 
@@ -79,11 +81,11 @@ public:
 	}
 
 	int getX() {
-		return pX;
+		return pos.getX();
 	}
 
 	int getY() {
-		return pY;
+		return pos.getY();
 	}
 
 	//void move(char moving);
