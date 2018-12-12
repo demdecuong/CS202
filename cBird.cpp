@@ -1,5 +1,4 @@
 #include "cBird.h"
-#include "cConsole.h"
 using namespace std;
 
 cBird::cBird(cPosition pos) : cEnemy(pos) {
@@ -37,9 +36,9 @@ char ** cBird::shape() {
 	
 	return a;
 };
-/*void cBird::sound() {
+void cBird::sound() {
 	PlaySound(TEXT("boc4.wav"), NULL, SND_ASYNC);
-};*/
+};
 void cBird::test() {
 	//Row1
 	a[0][0] = ' ';
@@ -108,4 +107,8 @@ cBird::~cBird()
 	for (int i = 0; i < 3; i++)
 		delete[] a[i];
 	delete[] a;
+}
+int cBird::getType()
+{
+	return 0;
 }

@@ -1,5 +1,4 @@
 #include "cDinosaur.h"
-#include "cConsole.h"
 using namespace std;
 
 cDinosaur::cDinosaur(cPosition pos) : cEnemy(pos) {
@@ -36,9 +35,9 @@ char ** cDinosaur::shape() {
 	
 	return a;
 };
-/*void cDinosaur::sound() {
+void cDinosaur::sound() {
 	PlaySound(TEXT("./Tiger6.wav"), NULL, SND_ASYNC);
-};*/
+};
 void cDinosaur::test() {
 	//Row1
 	a[0][0] = ' ';
@@ -104,4 +103,8 @@ cDinosaur::~cDinosaur()
 	for (int i = 0; i < 3; i++)
 		delete[] a[i];
 	delete[] a;
+}
+int cDinosaur::getType()
+{
+	return 2;
 }

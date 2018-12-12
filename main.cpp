@@ -1,6 +1,9 @@
 ﻿#include <iostream>
 #include <iomanip>
 #include <thread>
+#include <Windows.h>
+#include <mmsystem.h>
+
 
 #include "cMap.h"
 #include "cGame.h"
@@ -136,6 +139,7 @@ int main() {
 
 	cGame game;
 	game.newGame();
+//	PlaySound(TEXT("trafficjam.wav"), NULL, SND_ASYNC);
 
 
 	system("pause");

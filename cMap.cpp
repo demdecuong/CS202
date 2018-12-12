@@ -49,10 +49,12 @@ void cMap::drawMap() {
 	for (int i = 0; i < (int)enemyList.size(); ++i) {
 		//drawEnemies(enemyList[i]);
 		if (player.crash(enemyList[i]->getPos(), enemyList[i]->getWidth() - 3, enemyList[i]->getHeight())) {
+			enemyList[i]->sound();
 			player.killPlayer();
 			//randomNextState();
 			clrscr();
 			printMap();
+			deleteOldPlayer();
 			bombEffect();
 			return;
 		}
@@ -113,7 +115,7 @@ void cMap::initializeNewState() {
 	cPosition pos;
 	int tryCount = 10000;
 	while (tryCount--) {
-		int rRow = (rand() % 10);
+		int rRow = (rand() % 9) + 1;
 		padding[rRow] += (rand() % 20) + 9;
 		pos = cPosition((rRow * 3) + 1, padding[rRow]);
 		newEnemy = level.randNewEnemy(pos);
@@ -134,7 +136,7 @@ void cMap::randomNextState() {
 	cPosition pos;
 	int tryCount = 10000;
 	while (tryCount--) {
-		int rRow = rand() % 10;
+		int rRow = (rand() % 9) + 1;
 		pos = cPosition((rRow * 3) + 1, 4);
 		newEnemy = level.randNewEnemy(pos);
 		if (!newEnemy) break;
@@ -188,4 +190,30 @@ void cMap::bombEffect()
 
 void cMap::nextLevel() {
 	level.nextLevel();
+}
+
+void cMap::saveGame(string file)
+{
+	ofstream tmp("test.txt");
+	tmp.close();
+		ofstream outfile("minh.txt", ios::in |ios::out| ios::binary);
+		outfile.write((char*)&level,sizeof(level));
+		outfile.write((char*)player.getX(), sizeof(player.getX()));
+		outfile.write((char*)player.getY(), sizeof(player.getY()));
+		
+		vector <cOneRow*> rows = rowsData.listRow();
+		for (int i = 0; i < 10; ++i) {
+			outfile.write((char*)rows[i]->getCurrentRow(), sizeof(rows[i]->getCurrentRow()));
+			outfile.write((char*)rows[i]->getDirection(), sizeof(rows[i]->getDirection()));
+			outfile.write((char*)rows[i]->getSpeed(), sizeof(rows[i]->getSpeed()));
+			outfile.write((char*)rows[i]->getRedLight(), sizeof(rows[i]->getRedLight()));
+			vector <cEnemy*> enemy(rows[i]->getEnemy());
+			outfile.write((char*)enemy.size(), sizeof(enemy.size()));
+			for (int j = 0; j < (int)enemy.size(); ++j) {
+				outfile.write((char*)enemy[j]->getX(), sizeof(enemy[j]->getX()));
+				outfile.write((char*)enemy[j]->getY(), sizeof(enemy[j]->getY()));
+				outfile.write((char*)enemy[j]->getType(), sizeof(enemy[j]->getType()));
+			}
+		}
+		outfile.close();
 }

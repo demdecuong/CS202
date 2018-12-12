@@ -117,6 +117,15 @@ void cGame::newGame() { // start a new game, initialize cMap map
 			if (kbhit())
 			{
 				char key = getch();
+				if (key == 'l')
+				{
+					//Save
+					map.saveGame("minh.txt");
+				}
+				if (key == 't')
+				{
+					//Load
+				}
 				if (key == 'p')
 				{
 					togglePauseGame();
@@ -209,8 +218,7 @@ void cGame::loadGame() { // get file of cMap map
 	infile.close();
 }
 
-void cGame::saveGame() { // print file of cMap map
-}
+
 
 void cGame::togglePauseGame() { // toggle status of isPausing
 	isPausing = !isPausing;
@@ -220,7 +228,9 @@ void cGame::gameOver() {
 	cout << "Game over" << endl;
 };
 
-char MOVING;
+
+
+
 /*
 void SubThread(cGame*cg, bool *IS_RUNNING, bool *isPausing, bool *exitFlag)
 {

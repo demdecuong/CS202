@@ -103,3 +103,19 @@ bool cOneRow::printNewEnemy(cPosition pos, char ** shape, int w, int h) {
 	}
 	return 1;
 }
+
+bool cOneRow::getDirection() {
+	return direction;
+}
+
+bool cOneRow::getRedLight() {
+	return redLight;
+}
+
+int cOneRow::getSpeed() {
+	return speed;
+}
+
+int cOneRow::getCurrentRow() {
+	return currentRow;
+}

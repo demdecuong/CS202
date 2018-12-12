@@ -1,5 +1,4 @@
 #include "cCar.h"
-#include "cConsole.h"
 using namespace std;
 
 cCar::cCar(cPosition pos) : cEnemy(pos) {
@@ -80,10 +79,10 @@ char ** cCar::shape()
 
 	return a;
 }
-/*void cCar::sound()
+void cCar::sound()
 {
 	PlaySound(TEXT("trafficjam.wav"), NULL, SND_ASYNC);
-}*/
+}
 void cCar::test()
 {
 	//Row1
@@ -121,4 +120,8 @@ void cCar::test()
 			cout << endl;
 	}
 
+}
+int cCar::getType()
+{
+	return 1;
 }

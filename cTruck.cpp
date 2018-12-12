@@ -1,5 +1,4 @@
 #include "cTruck.h"
-#include "cConsole.h"
 using namespace std;
 
 cTruck::cTruck(cPosition pos) : cEnemy(pos) {
@@ -40,10 +39,10 @@ char **cTruck::shape()
 
 	return a;
 }; 
-/*void cTruck::sound()
+void cTruck::sound()
 {
 	PlaySound(TEXT("carstarthonkbackfire.wav"), NULL, SND_ASYNC);
-}*/
+}
 cTruck::cTruck()
 {
 	a = new char*[3];
@@ -115,4 +114,8 @@ void cTruck::test()
 		}
 		cout << endl;
 	}
+}
+int cTruck::getType()
+{
+	return 4;
 }

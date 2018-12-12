@@ -14,6 +14,7 @@ public:
 	{
 		return 8;
 	}
+	int getType();
 	cTruck();
 	~cTruck();
 };

@@ -15,6 +15,7 @@ public:
 	{
 		return 6;
 	}
+	int getType();
 	cDinosaur();
 	~cDinosaur();
 };

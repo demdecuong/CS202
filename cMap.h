@@ -2,6 +2,7 @@
 #define cMap_h
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include "cPlayer.h"
 #include "cPosition.h"
@@ -35,6 +36,8 @@ public:
 	void updatePosPlayer(char moving);
 	
 	void bombEffect();
+
+	void saveGame(string file);
 
 	//check endgame
 	bool isEnd();

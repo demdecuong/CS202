@@ -29,3 +29,7 @@ int cRows::moveToNextState(int t) {
 	}
 	return nDelete;
 }
+
+vector <cOneRow*> cRows::listRow() {
+	return subRows;
+}

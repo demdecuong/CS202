@@ -33,7 +33,7 @@ public:
 
 	void loadGame(); // get file of cMap map
 
-	void saveGame(); // print file of cMap map
+	//void saveGame(); // print file of cMap map
 
 	void togglePauseGame(); // toggle status of isPausing
 

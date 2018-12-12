@@ -7,7 +7,6 @@ class cBird : public cEnemy
 public:
 
 	cBird(cPosition pos);
-	void draw();
 	char ** shape();
 	void sound();
 	void test();
@@ -15,6 +14,7 @@ public:
 	{
 		return 6;
 	}
+	int getType();
 	cBird();
 	~cBird();
 };

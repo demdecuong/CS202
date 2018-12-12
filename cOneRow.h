@@ -27,6 +27,10 @@ public:
 	void deleteOldEnemy(cPosition pos, int w, int h);
 	bool printNewEnemy(cPosition pos, char ** shape, int w, int h);
 	vector<cEnemy*> getEnemy();
+	bool getDirection();
+	bool getRedLight();
+	int getSpeed();
+	int getCurrentRow();
 };
 
 #endif // cOneRow
