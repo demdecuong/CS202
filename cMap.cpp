@@ -173,19 +173,31 @@ bool cMap::isWin()
 
 void cMap::bombEffect()
 {
-	gotoXY(10, 10);
-	cout << R"(                                               ____                       )" << "\n"
-		<< R"(                                           __,-~~/~    `---.                  )" << "\n"
-		<< R"(                                         _/_,---(      ,    )                 )" << "\n"
-		<< R"(                                     __ /        <    /   )  \___             )" << "\n"
-		<< R"(                      - ------===;;;'====------------------===;;;===----- -  -)" << "\n"
-		<< R"(                                      \/  ~"~"~"~"~"~\~"~)~" / )" << "\n"
-		<< R"(                                        (_ (   \  (     >    \)               )" << "\n"
-		<< R"(                                         \_( _ <         >_>'                 )" << "\n"
-		<< R"(                                            ~ `-i' ::>|--"                    )" << "\n"
-		<< R"(                                                I;|.|.|                       )" << "\n"
-		<< R"(                                               <|i::|i|`.                     )" << "\n"
-		<< R"(                                              (` ^'"`-' ")                    )";
+	const int baseX = 10, baseY = 10;
+	gotoXY(baseX, baseY);
+	cout << R"(                                               ____                       )" << "\n";
+	gotoXY(baseX, baseY + 1);
+	cout << R"(                                           __,-~~/~    `---.                  )" << "\n";
+	gotoXY(baseX, baseY + 2);
+	cout << R"(                                         _/_,---(      ,    )                 )" << "\n";
+	gotoXY(baseX, baseY + 3);
+	cout << R"(                                     __ /        <    /   )  \___             )" << "\n";
+	gotoXY(baseX, baseY + 4);
+	cout << R"(                      - ------===;;;'====------------------===;;;===----- -  -)" << "\n";
+	gotoXY(baseX, baseY + 5);
+	cout << R"(                                      \/  ~"~"~"~"~"~\~"~)~" / )" << "\n";
+	gotoXY(baseX, baseY + 6);
+	cout << R"(                                        (_ (   \  (     >    \)               )" << "\n";
+	gotoXY(baseX, baseY + 7);
+	cout << R"(                                         \_( _ <         >_>'                 )" << "\n";
+	gotoXY(baseX, baseY + 8);
+	cout << R"(                                            ~ `-i' ::>|--"                    )" << "\n";
+	gotoXY(baseX, baseY + 9);
+	cout << R"(                                                I;|.|.|                       )" << "\n";
+	gotoXY(baseX, baseY + 10);
+	cout << R"(                                               <|i::|i|`.                     )" << "\n";
+	gotoXY(baseX, baseY + 11);
+	cout << R"(                                              (` ^'"`-' ")                    )";
 }
 
 void cMap::nextLevel() {
