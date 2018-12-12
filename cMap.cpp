@@ -2,8 +2,6 @@
 #include "cConsole.h"
 
 cMap::cMap() : width(115), height(36) {
-	clrscr();
-	gotoXY(0, 0);
 	for (int i = 0; i <= width; i++) {
 		map[0][i] = map[height + 1][i] = '-';
 	}
@@ -33,6 +31,8 @@ void cMap::resetMap() {
 void cMap::printMap()
 {
 	//    TextColor(14);
+	clrscr();
+	gotoXY(0, 0);
 	for (int i = 0; i <= height + 1; ++i) {
 		cout << "  ";
 		for (int j = 0; j <= width + 1; ++j) {
@@ -49,7 +49,7 @@ void cMap::drawMap() {
 	for (int i = 0; i < (int)enemyList.size(); ++i) {
 		//drawEnemies(enemyList[i]);
 		if (player.crash(enemyList[i]->getPos(), enemyList[i]->getWidth() - 3, enemyList[i]->getHeight())) {
-			enemyList[i]->sound();
+			if (!isMute) enemyList[i]->sound();
 			player.killPlayer();
 			//randomNextState();
 			clrscr();
@@ -179,7 +179,7 @@ void cMap::bombEffect()
 		<< R"(                                         _/_,---(      ,    )                 )" << "\n"
 		<< R"(                                     __ /        <    /   )  \___             )" << "\n"
 		<< R"(                      - ------===;;;'====------------------===;;;===----- -  -)" << "\n"
-		<< R"(                                      \/  ~"~"~"~"~"~\~"~)~" / )"				 <<	"\n"
+		<< R"(                                      \/  ~"~"~"~"~"~\~"~)~" / )" << "\n"
 		<< R"(                                        (_ (   \  (     >    \)               )" << "\n"
 		<< R"(                                         \_( _ <         >_>'                 )" << "\n"
 		<< R"(                                            ~ `-i' ::>|--"                    )" << "\n"
@@ -192,28 +192,92 @@ void cMap::nextLevel() {
 	level.nextLevel();
 }
 
+void cMap::printInt(int x, ofstream& outfile) {
+	outfile.write((char*)&x, sizeof(int));
+}
+
 void cMap::saveGame(string file)
 {
-	ofstream tmp("test.txt");
-	tmp.close();
-		ofstream outfile("minh.txt", ios::in |ios::out| ios::binary);
-		outfile.write((char*)&level,sizeof(level));
-		outfile.write((char*)player.getX(), sizeof(player.getX()));
-		outfile.write((char*)player.getY(), sizeof(player.getY()));
-		
-		vector <cOneRow*> rows = rowsData.listRow();
-		for (int i = 0; i < 10; ++i) {
-			outfile.write((char*)rows[i]->getCurrentRow(), sizeof(rows[i]->getCurrentRow()));
-			outfile.write((char*)rows[i]->getDirection(), sizeof(rows[i]->getDirection()));
-			outfile.write((char*)rows[i]->getSpeed(), sizeof(rows[i]->getSpeed()));
-			outfile.write((char*)rows[i]->getRedLight(), sizeof(rows[i]->getRedLight()));
-			vector <cEnemy*> enemy(rows[i]->getEnemy());
-			outfile.write((char*)enemy.size(), sizeof(enemy.size()));
-			for (int j = 0; j < (int)enemy.size(); ++j) {
-				outfile.write((char*)enemy[j]->getX(), sizeof(enemy[j]->getX()));
-				outfile.write((char*)enemy[j]->getY(), sizeof(enemy[j]->getY()));
-				outfile.write((char*)enemy[j]->getType(), sizeof(enemy[j]->getType()));
+	ofstream outfile("./data/" + file + ".bin", ios::out | ios::binary);
+	printInt(level.getLevel(), outfile);
+	printInt(player.getX(), outfile);
+	printInt(player.getY(), outfile);
+
+	vector <cOneRow*> rows(rowsData.listRow());
+	for (int i = 0; i < 10; ++i) {
+		//outfile.write((char*)rows[i]->getCurrentRow(), sizeof(rows[i]->getCurrentRow()));
+		printInt(rows[i]->getCurrentRow(), outfile);
+		//outfile.write((char*)rows[i]->getDirection(), sizeof(rows[i]->getDirection()));
+		printInt(rows[i]->getDirection(), outfile);
+		//outfile.write((char*)rows[i]->getSpeed(), sizeof(rows[i]->getSpeed()));
+		printInt(rows[i]->getSpeed(), outfile);
+		//outfile.write((char*)rows[i]->getRedLight(), sizeof(rows[i]->getRedLight()));
+		printInt(rows[i]->getRedLight(), outfile);
+		vector <cEnemy*> enemy(rows[i]->getEnemy());
+		//outfile.write((char*)enemy.size(), sizeof(enemy.size()));
+		printInt((int)enemy.size(), outfile);
+		for (int j = 0; j < (int)enemy.size(); ++j) {
+			//outfile.write((char*)enemy[j]->getX(), sizeof(enemy[j]->getX()));
+			printInt(enemy[j]->getX(), outfile);
+			//outfile.write((char*)enemy[j]->getY(), sizeof(enemy[j]->getY()));
+			printInt(enemy[j]->getY(), outfile);
+			//outfile.write((char*)enemy[j]->getType(), sizeof(enemy[j]->getType()));
+			printInt(enemy[j]->getType(), outfile);
+		}
+	}
+	outfile.close();
+}
+
+bool cMap::printLevelUp() {
+	clrscr();
+	printMap();
+	deleteOldPlayer();
+	gotoXY(15, 15); cout << "******    *******       *******      *******    *******    ******     *******      ###   ###" << endl;
+	gotoXY(15, 16); cout << "**        **     **    **     **   **         **           **         **     *     ###   ###" << endl;
+	gotoXY(15, 17); cout << "**        ** *  **    **       **    ****       ****       ******     **      *    ###   ###" << endl;
+	gotoXY(15, 18); cout << "**        **   **      **     **         **         **     **         **     *     ###   ###" << endl;
+	gotoXY(15, 19); cout << "******    **    **      *******    *****      *****        ******     *******     ::::: ::::: " << endl;
+	gotoXY(35, 21); cout << "Continue ?" << endl;
+	const char *choice[2] = { "<NO>", "<YES>" };
+	int pos = 0, x = 36, y = 22;
+	TextColor(7);
+	/*TextColor(227);
+	gotoXY(x, y);
+	cout << choice[0];
+	TextColor(7);
+
+	TextColor(227);
+	gotoXY(x+10, y);
+	cout << choice[1];
+	TextColor(7);*/
+
+	while (1) {
+		TextColor(7);
+		for (int i = 0; i < 2; i++) {
+			if (i == pos) {
+				TextColor(227);
+				gotoXY(x, y + i);
+				cout << choice[i];
+				TextColor(7);
+			}
+			else {
+				gotoXY(x, y + i);
+				cout << choice[i];
 			}
 		}
-		outfile.close();
+
+		switch (inputKey()) {
+		case 'w':
+			pos--;
+			pos %= 2;
+			break;
+		case 's':
+			pos++;
+			pos %= 2;
+			break;
+		case 13:
+			return pos;
+		}
+	}
+
 }

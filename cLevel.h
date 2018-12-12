@@ -21,6 +21,7 @@ public:
 	cLevel();
 	cLevel(int level, int nEnemy);
 	//  ~cLevel();
+	int getLevel();
 	bool newLevel(int lv);
 	bool nextLevel();
 	int getMaxSpeed();

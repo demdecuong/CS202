@@ -45,13 +45,13 @@ int cOneRow::moveToNextState(int t) {
 		}
 		else
 		{
-			gotoXY(LEFTMAP-1, currentRow);
+			gotoXY(LEFTMAP - 1, currentRow);
 		}
 		cout << (char)254;
 		TextColor(7);
 		//
 	}
-	if ((t % speed) && t != 0) return nDelete;
+	if (((t % speed) == 0) && t != 0) return nDelete;
 	if (redLight) return nDelete;
 	vector <cEnemy*> newEnemy;
 	newEnemy.reserve(100);
@@ -101,6 +101,7 @@ bool cOneRow::printNewEnemy(cPosition pos, char ** shape, int w, int h) {
 			cout << shape[i][j - max(1, Y)];
 		}
 	}
+	//Sleep(200);
 	return 1;
 }
 

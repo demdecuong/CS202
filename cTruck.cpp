@@ -38,7 +38,7 @@ char **cTruck::shape()
 {
 
 	return a;
-}; 
+};
 void cTruck::sound()
 {
 	PlaySound(TEXT("carstarthonkbackfire.wav"), NULL, SND_ASYNC);

@@ -5,7 +5,7 @@ class cDinosaur : public cEnemy
 {
 	char **a; //a[3][6]
 public:
-	
+
 	cDinosaur(cPosition pos);
 
 	char ** shape();

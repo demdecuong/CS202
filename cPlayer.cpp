@@ -89,21 +89,25 @@ int cPlayer::getWidth() {
 }
 
 void cPlayer::Up() {
+	//if(!isMute)sound();
 	if (pos.getX() <= 3) return;
 	pos.setPos(pos.getX() - 3, pos.getY());
 }
 
 void cPlayer::Down() {
+	//if (!isMute)sound();
 	if (pos.getX() + 3 > 34) return;
 	pos.setPos(pos.getX() + 3, pos.getY());
 }
 
 void cPlayer::Left() {
+	//if (!isMute)sound();
 	if (pos.getY() <= LEFTMAP) return;
 	pos.setPos(pos.getX(), pos.getY() - 1);
 }
 
 void cPlayer::Right() {
+	//if (!isMute)sound();
 	if (pos.getY() + 2 >= RIGHTMAP) return;
 	pos.setPos(pos.getX(), pos.getY() + 1);
 }
@@ -113,8 +117,16 @@ bool cPlayer::checkIsDead() {
 }
 
 bool cPlayer::crash(cPosition pos, int w, int h) {
-	if (this->getX() == pos.getX() && max(getY(), pos.getY()) <= min(getY() + getWidth() - 3, pos.getY() + w - 3)) {
+	int magicConst = 3;
+	if (w == 5)magicConst = 2;
+	if (w == 3) magicConst = 1;
+	if (this->getX() == pos.getX() && max(getY(), pos.getY()) <= min(getY() + getWidth() - magicConst, pos.getY() + w - magicConst)) {
 		return true;
 	}
 	return false;
+}
+
+void cPlayer::sound()
+{
+	PlaySound(TEXT("RING.wav"), NULL, SND_ASYNC);
 }

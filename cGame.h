@@ -14,11 +14,10 @@
 
 using namespace std;
 
-class cGame  
+class cGame
 {
 	cMap map;
 	bool isPausing = false;
-
 public:
 
 	cGame() = default;
@@ -29,21 +28,26 @@ public:
 
 	void menu(bool &isFinish);
 
-	void newGame(); // start a new game, initialize cMap map
+	bool newGame(); // start a new game, initialize cMap map
 
 	void loadGame(); // get file of cMap map
 
-	//void saveGame(); // print file of cMap map
+					 //void saveGame(); // print file of cMap map
 
 	void togglePauseGame(); // toggle status of isPausing
+
+	void toggleMute();
 
 	void gameOver();
 
 	void playGame(bool &is_finish);
-	
+
 	void testThread();
 
+	void loading();
 
+	void menu();
+	bool continueMenu();
 };
 void SubThread(cGame*cg, bool *IS_RUNNING, bool *isPausing, bool *exitFlag);
 #endif // cGame

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <conio.h>
 #include "cConsole.h"
-
+using namespace std;
 
 int inputKey()
 {
@@ -104,4 +104,29 @@ void DisableMouse() {
 	_Out_ LPDWORD lpMode;
 	GetConsoleMode(hConsoleHandle, &prev_mode);
 	SetConsoleMode(hConsoleHandle, prev_mode & ~ENABLE_QUICK_EDIT_MODE);
+}
+
+void drawTitle()
+{
+	int base = 10;
+	int baseX = 20;
+	gotoXY(baseX, base);
+	cout << " =====  =======   ======   =====  ===== ==== ===       =======" << endl;
+	gotoXY(baseX, base + 1);
+	cout << "||     ||     |  ||	   |  ||     ||	     ||	||  \\   | ||  " << endl;
+	gotoXY(baseX, base + 2);
+	cout << "||     ||_____|  ||	   |  ||___  ||___   ||	||   \\  | ||   ====  " << endl;
+	gotoXY(baseX, base + 3);
+	cout << "||     ||   \\    ||    |       |     |   ||	||    \\ | ||_____||         	" << endl;
+	gotoXY(baseX, base + 4);
+	cout << " =========== \\    ======   ===== =====  ==== ======   ======      /\\      ====\\\\" << endl;
+	gotoXY(baseX, base + 5);
+	cout << "                                            ||     | ||    |     // \\    ||	   |" << endl;
+	gotoXY(baseX, base + 6);
+	cout << "                                            || ====  ||    |    //   \\   ||	   |" << endl;
+	gotoXY(baseX, base + 7);
+	cout << "                                            ||   \\\\  ||    |   //  ===\\  ||	   |" << endl;
+	gotoXY(baseX, base + 8);
+	cout << "                                            ||    \\\\  ======  //	   \\  ====//" << endl;
+
 }

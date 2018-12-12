@@ -34,15 +34,18 @@ public:
 	void initializeNewState(); // intialize a new map base on level, reset player state
 							   //    void handleKeyInput(); // receive key input from cGame and call appropriate function
 	void updatePosPlayer(char moving);
-	
+
 	void bombEffect();
 
 	void saveGame(string file);
 
+	bool printLevelUp();
 	//check endgame
 	bool isEnd();
 	//check isWin
 	bool isWin();
 	void nextLevel();
+
+	void printInt(int x, ofstream& outfile);
 };
 #endif // cMap

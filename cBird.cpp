@@ -33,7 +33,7 @@ cBird::cBird(cPosition pos) : cEnemy(pos) {
 
 
 char ** cBird::shape() {
-	
+
 	return a;
 };
 void cBird::sound() {

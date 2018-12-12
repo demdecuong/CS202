@@ -25,7 +25,7 @@ vector<cEnemy*> cRows::listEnemy() {
 int cRows::moveToNextState(int t) {
 	int nDelete = 0;
 	for (int i = 0; i < (int)subRows.size(); ++i) {
-		 nDelete += subRows[i]->moveToNextState(t);
+		nDelete += subRows[i]->moveToNextState(t);
 	}
 	return nDelete;
 }

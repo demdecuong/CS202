@@ -19,6 +19,10 @@ void cLevel::initialize() {
 	minSpeed = 100 - level * 2;
 }
 
+int cLevel::getLevel() {
+	return level;
+}
+
 bool cLevel::newLevel(int lv) {
 	if (lv > maxLevel) return false;
 	level = lv;

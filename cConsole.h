@@ -5,6 +5,8 @@
 #include <conio.h>
 #include <time.h>
 
+#define isMute false
+
 #define ColorCode_Back			0
 #define ColorCode_DarkBlue		1
 #define ColorCode_DarkGreen		2
@@ -59,4 +61,7 @@ void FixConsoleWindow();
 
 void DisableMouse();
 
+
+void drawTitle();
 #endif
+

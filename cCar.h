@@ -2,7 +2,7 @@
 #define cCar_h
 #include "cEnemy.h"
 
-class cCar : public cEnemy 
+class cCar : public cEnemy
 {
 	char **a; //a[3][8]
 public:

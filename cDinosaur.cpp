@@ -32,7 +32,7 @@ cDinosaur::cDinosaur(cPosition pos) : cEnemy(pos) {
 
 
 char ** cDinosaur::shape() {
-	
+
 	return a;
 };
 void cDinosaur::sound() {

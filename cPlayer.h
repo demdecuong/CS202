@@ -69,5 +69,6 @@ public:
 
 	bool crash(cPosition pos, int w, int h);
 
+	void sound();
 };
 #endif // cPlayer
