@@ -2,7 +2,8 @@
 
 void cGame::gameSettings() {
 	system("cls");
-	const char *setting[3] = { "Mode", "Mute sound", "Menu" };
+	const char *setting[3] = { "Mode", "Sound", "Menu" };
+	char * currentSettting[3] = { "Hard", "ON", "" };
 	int pos1 = 0;
 	const int y = 10;
 	const int x = 40;
@@ -49,12 +50,12 @@ void cGame::gameSettings() {
 			if (i == pos1) {
 				TextColor(227);
 				gotoXY(x, y + i);
-				cout << setting[i];
+				cout << setting[i] << " " << currentSettting[i];
 				TextColor(7);
 			}
 			else {
 				gotoXY(x, y + i);
-				cout << setting[i];
+				cout << setting[i] << " " << currentSettting[i];
 			}
 		}
 		while (1) {
@@ -81,7 +82,14 @@ void cGame::gameSettings() {
 						break;
 					}
 					case 1: {
-						flag = 1;
+						toggleMute();
+						if ((bool)isMute) {
+							currentSettting[1] = "OFF";
+						}
+						else {
+							currentSettting[1] = "ON";
+						}
+						//flag = 1;
 						break;
 					}
 					case 2: {
@@ -95,7 +103,7 @@ void cGame::gameSettings() {
 		}
 		system("cls");
 	}
-	if (flag == 1) {
+	if (flag == 1) { //???
 		system("cls");
 		bool isFinish = false;
 		cGame::menu(isFinish);
@@ -387,11 +395,11 @@ void cGame::gameOver() {
 
 void cGame::toggleMute() {
 	bool curMute = !isMute;
-#undef isMute
+	#undef isMute
 	if (curMute) {
-#define isMute true
+		#define isMute true
 	}
 	else {
-#define isMute false
+		#define isMute false
 	}
 }
