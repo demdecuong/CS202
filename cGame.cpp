@@ -106,7 +106,6 @@ void cGame::gameSettings() {
 void cGame::menu(bool &isFinish) {
 }
 
-
 void cGame::menu() {
 	const string choice[4] = { "New Game","Load Game","Settings","Quit" };
 	int pos = 0;
@@ -203,7 +202,7 @@ bool cGame::continueMenu() {
 	gotoXY(15, 8); cout << "**        **   **     **      **         **   **    **    **         **     *     ###   ###" << endl;
 	gotoXY(15, 9); cout << "******    **    **   **        **  *****      **    **    ******     *******     ::::: ::::: " << endl;
 	gotoXY(35, 23); cout << "Continue ?" << endl;
-	const char *choice[2] = { "<NO>", "<YES>" };
+	const char *choice[2] = { "<YES>", "<NO>" };
 	int pos = 0, x = 36, y = 25;
 	TextColor(7);
 
@@ -233,7 +232,7 @@ bool cGame::continueMenu() {
 			pos %= 2;
 			break;
 		case 13:
-			return pos;
+			return !pos;
 		}
 	}
 
@@ -288,11 +287,11 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 		if (map.isWin()) {
 			if (map.printLevelUp()) {
 				clrscr();
+				map.nextLevel();
 				map.printMap();
 				map.deleteOldPlayer();
 				map.initializeNewState();
 				map.drawPlayer();
-				map.nextLevel();
 			}
 			else return true;
 		}

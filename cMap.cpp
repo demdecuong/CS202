@@ -250,7 +250,7 @@ bool cMap::printLevelUp() {
 	gotoXY(15, 18); cout << "**        **   **      **     **         **         **     **         **     *     ###   ###" << endl;
 	gotoXY(15, 19); cout << "******    **    **      *******    *****      *****        ******     *******     ::::: ::::: " << endl;
 	gotoXY(35, 21); cout << "Continue ?" << endl;
-	const char *choice[2] = { "<NO>", "<YES>" };
+	const char *choice[2] = { "<YES>", "<NO>" };
 	int pos = 0, x = 36, y = 22;
 	TextColor(7);
 	/*TextColor(227);
@@ -288,7 +288,7 @@ bool cMap::printLevelUp() {
 			pos %= 2;
 			break;
 		case 13:
-			return pos;
+			return !pos;
 		}
 	}
 
