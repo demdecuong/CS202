@@ -125,7 +125,7 @@ void cMap::initializeNewState() {
 			delete newEnemy;
 		};
 	}
-	Sleep(100);
+	Sleep(200);
 	rowsData.moveToNextState(0);
 }
 

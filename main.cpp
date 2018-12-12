@@ -1,14 +1,14 @@
 ﻿#include <iostream>
 #include <iomanip>
 #include <thread>
+#include <cstdlib>
+#include <ctime>
 
 #include "cMap.h"
 #include "cGame.h"
 #include "cTruck.h"
 #include "cCar.h"
 #include "cBird.h"
-#include "cDinosaur.h"
-#include "cConsole.h"
 
 using namespace std;
 /*void drawTitle()

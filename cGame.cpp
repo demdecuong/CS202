@@ -240,6 +240,8 @@ bool cGame::continueMenu() {
 }
 
 bool cGame::newGame() { // start a new game, initialize cMap map
+	map.~cMap();
+	new(&map) cMap();
 	map.printMap();
 	map.initializeNewState();
 	while (!map.isEnd()) {
@@ -289,6 +291,7 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 				map.printMap();
 				map.deleteOldPlayer();
 				map.initializeNewState();
+				map.drawPlayer();
 				map.nextLevel();
 			}
 			else return true;

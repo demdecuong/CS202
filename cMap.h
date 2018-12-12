@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <thread>
 #include "cPlayer.h"
 #include "cPosition.h"
 #include "cRows.h"

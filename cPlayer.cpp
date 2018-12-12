@@ -89,25 +89,25 @@ int cPlayer::getWidth() {
 }
 
 void cPlayer::Up() {
-	//if(!isMute)sound();
+	if(!isMute && !isDead)sound();
 	if (pos.getX() <= 3) return;
 	pos.setPos(pos.getX() - 3, pos.getY());
 }
 
 void cPlayer::Down() {
-	//if (!isMute)sound();
+	if (!isMute && !isDead)sound();
 	if (pos.getX() + 3 > 34) return;
 	pos.setPos(pos.getX() + 3, pos.getY());
 }
 
 void cPlayer::Left() {
-	//if (!isMute)sound();
+	if (!isMute && !isDead)sound();
 	if (pos.getY() <= LEFTMAP) return;
 	pos.setPos(pos.getX(), pos.getY() - 1);
 }
 
 void cPlayer::Right() {
-	//if (!isMute)sound();
+	if (!isMute && !isDead)sound();
 	if (pos.getY() + 2 >= RIGHTMAP) return;
 	pos.setPos(pos.getX(), pos.getY() + 1);
 }
