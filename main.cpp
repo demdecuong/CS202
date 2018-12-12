@@ -135,7 +135,8 @@ int main() {
 	//DisableMouse();
 
 	cGame game;
-	game.newGame();
+	game.menu();
+	
 
 
 	system("pause");

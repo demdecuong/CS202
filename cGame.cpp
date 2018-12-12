@@ -95,19 +95,131 @@ void cGame::gameSettings() {
 		}
 		system("cls");
 	}
-	if (flag == 1) {
+}
+
+void cGame::menu() {
+	const char* choice[4] = { "New Game","Load Game","Settings","Quit" };
+	int pos = 0;
+	int x = 35, y = 20;
+	while(1) {
 		system("cls");
-		bool isFinish = false;
-		cGame::menu(isFinish);
-		//  cGame::drawGame();
+		int color = rand() % 7 + 9;
+		TextColor(color);
+		/*	cout << "******       *******        **        ******            ******    *******       *******      *******    *******" << endl;
+			cout << "**    **     **   **       ** **      **   **           **        **     **    **     **   **         **" << endl;
+			cout << "** * **      **   **      **   **     **    **          **        ** *  **    **       **    ****       ****" << endl;
+			cout << "**   **      **   **     ** *** **    **   **           **        **   **      **     **         **         **" << endl;
+			cout << "**    **     *******    **       **   ******            ******    **    **      *******    *****      *****" << endl;*/
+		gotoXY(20, 10); cout << " =====  =======   ======   =====  ===== ==== ===       =======" << endl;
+		gotoXY(20, 11); cout << "||     ||     |  ||	   |  ||     ||	     ||	||  \\   | ||  " << endl;
+		gotoXY(20, 12); cout << "||     ||_____|  ||	   |  ||___  ||___   ||	||   \\  | ||   ====  " << endl;
+		gotoXY(20, 13); cout << "||     ||   \\    ||    |       |     |   ||	||    \\ | ||_____||         	" << endl;
+		gotoXY(20, 14); cout << " =========== \\    ======   ===== =====  ==== ======   ======      /\\      ====\\\\" << endl;
+		gotoXY(20, 15); cout << "                                            ||     | ||    |     // \\    ||	   |" << endl;
+		gotoXY(20, 16); cout << "                                            || ====  ||    |    //   \\   ||	   |" << endl;
+		gotoXY(20, 17); cout << "                                            ||   \\\\  ||    |   //  ===\\  ||	   |" << endl;
+		gotoXY(20, 18); cout << "                                            ||    \\\\  ======  //	   \\  ====//" << endl;
+		TextColor(7);
+		for (int i = 0; i < 4; i++) {
+			if (i == pos) {
+				TextColor(227);
+				gotoXY(x, y + i);
+				cout << choice[i];
+				TextColor(7);
+			}
+			else {
+				gotoXY(x, y + i);
+				cout << choice[i];
+			}
+		}
+
+		switch (inputKey()) {
+		case 'w':
+			pos--;
+			pos %= 4;
+			break;
+		case 's':
+			pos++;
+			pos %= 4;
+			break;
+		case 13:
+			switch (pos) {
+			case 0:
+				while (1) {
+					if (newGame()) {
+						clrscr();
+						return; // thang nhung k choi tiep
+					}
+					if (!continueMenu()) {
+						clrscr();
+						return; //thua nhung khong choi tiep
+					}
+				}
+				break;
+			case 1:
+				loadGame();
+				break;
+			case 2:
+				gameSettings();
+				break;
+			case 3:
+				return;
+			}
+		}
 	}
+
 }
 
-void cGame::menu(bool &isFinish) {
+bool cGame::continueMenu() {
+	clrscr();
+	map.printMap();
+	map.deleteOldPlayer();
+	map.bombEffect();
+	gotoXY(15, 5); cout << "******    *******        ****      *******    **    **    ******     *******      ###   ###" << endl;
+	gotoXY(15, 6); cout << "**        **     **     **  **   **           **    **    **         **     *     ###   ###" << endl;
+	gotoXY(15, 7); cout << "**        ** *  **     **    **    ****       ********    ******     **      *    ###   ###" << endl;
+	gotoXY(15, 8); cout << "**        **   **     **      **         **   **    **    **         **     *     ###   ###" << endl;
+	gotoXY(15, 9); cout << "******    **    **   **        **  *****      **    **    ******     *******     ::::: ::::: " << endl;
+	gotoXY(35, 23); cout << "Continue ?" << endl;
+	const char *choice[2] = { "<NO>", "<YES>" };
+	int pos = 0, x = 36, y = 25;
+	TextColor(7);
+
+	while (1) {
+		TextColor(7);
+		for (int i = 0; i < 2; i++) {
+			if (i == pos) {
+				TextColor(227);
+				gotoXY(x, y + i);
+				cout << choice[i];
+				TextColor(7);
+			}
+			else {
+				gotoXY(x, y + i);
+				cout << choice[i];
+			}
+		}
+
+		switch (inputKey()) {
+		case 'w':
+			pos--;
+			pos = abs(pos);
+			pos %= 2;
+			break;
+		case 's':
+			pos++;
+			pos %= 2;
+			break;
+		case 13:
+			return pos;
+		}
+	}
+
 }
 
 
-void cGame::newGame() { // start a new game, initialize cMap map
+bool cGame::newGame() { // start a new game, initialize cMap map
+		clrscr();
 		map.printMap();
 		map.initializeNewState();
 		while (!map.isEnd()) {
@@ -142,12 +254,17 @@ void cGame::newGame() { // start a new game, initialize cMap map
 				map.drawMap();
 			}
 			if (map.isWin()) {
-				map.printMap();
-				map.initializeNewState();
-				map.nextLevel();
-				break;
+				if (map.printLevelUp()) {
+					clrscr();
+					map.printMap();
+					map.deleteOldPlayer();
+					map.initializeNewState();
+					map.nextLevel();
+				}
+				else return true;
 			}
 		}
+		return false;
 }
 
 void cGame::loadGame() { // get file of cMap map

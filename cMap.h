@@ -22,6 +22,7 @@ class cMap
 public:
 	cMap();
 	~cMap() = default;
+	bool printLevelUp(); // print congratulations
 	void resetMap(); // reset the map to default with no enemy and no player
 	void printMap(); // print map to screen
 	void drawMap(); // draw all enemies and player

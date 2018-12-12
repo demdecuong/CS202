@@ -30,6 +30,61 @@ void cMap::resetMap() {
 	}
 }
 
+bool cMap::printLevelUp() {
+	clrscr();
+	printMap();
+	deleteOldPlayer();
+	gotoXY(15, 15); cout << "******    *******       *******      *******    *******    ******     *******      ###   ###" << endl;
+	gotoXY(15, 16); cout << "**        **     **    **     **   **         **           **         **     *     ###   ###"<< endl;
+	gotoXY(15, 17); cout << "**        ** *  **    **       **    ****       ****       ******     **      *    ###   ###" << endl;
+	gotoXY(15, 18); cout << "**        **   **      **     **         **         **     **         **     *     ###   ###" << endl;
+	gotoXY(15, 19); cout << "******    **    **      *******    *****      *****        ******     *******     ::::: ::::: " << endl;
+	gotoXY(35, 21); cout << "Continue ?" << endl;
+	const char *choice[2] = { "<NO>", "<YES>" };
+	int pos = 0, x = 36, y = 22;
+	TextColor(7);
+
+	/*TextColor(227);
+	gotoXY(x, y);
+	cout << choice[0];
+	TextColor(7);
+
+	TextColor(227);
+	gotoXY(x+10, y);
+	cout << choice[1];
+	TextColor(7);*/
+
+	while (1) {
+		TextColor(7);
+		for (int i = 0; i < 2; i++) {
+			if (i == pos) {
+				TextColor(227);
+				gotoXY(x, y + i);
+				cout << choice[i];
+				TextColor(7);
+			}
+			else {
+				gotoXY(x, y + i);
+				cout << choice[i];
+			}
+		}
+		
+		switch (inputKey()) {
+		case 'w':
+			pos--;
+			pos %= 2;
+			break;
+		case 's':
+			pos++;
+			pos %= 2;
+			break;
+		case 13:
+			return pos;
+		}
+	}
+
+}
+
 void cMap::printMap()
 {
 	//    TextColor(14);
@@ -39,7 +94,12 @@ void cMap::printMap()
 			cout << map[i][j];
 		}
 		cout << endl;
+		
 	}
+	gotoXY(width + 10, 0);
+	cout << "Level: " << level.getLevel() << endl;
+
+	cout << " L = Save Game | T = Load Game | P = Pause Game" << endl;
 	drawPlayer();
 }
 

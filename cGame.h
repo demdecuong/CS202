@@ -27,9 +27,11 @@ public:
 
 	void gameSettings();
 
-	void menu(bool &isFinish);
+	void menu();
 
-	void newGame(); // start a new game, initialize cMap map
+	bool continueMenu();
+
+	bool newGame(); // start a new game, initialize cMap map
 
 	void loadGame(); // get file of cMap map
 
