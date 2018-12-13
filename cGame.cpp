@@ -129,48 +129,55 @@ void cGame::menu() {
 	int pos = 0;
 	int x = 35, y = 20;
 	if (!constantVar::isMute)PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
+	bool changeInput = true;
 	while (true) {
-		system("cls");
+		changeInput = true;
+		while (true) {
+			if (changeInput) {
+				system("cls");
+				for (int i = 0; i < 4; i++) {
+					gotoXY(x, y + i);
+					if (i == pos)
+					{
+						SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+					}
+					else
+					{
+						SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+					}
+					cout << choice[i] << endl;
+				}
 
-		//TextColor(7);
-		int color = rand() % 7 + 9;
-		TextColor(color);
-		/*	cout << "******       *******        **        ******            ******    *******       *******      *******    *******" << endl;
-		cout << "**    **     **   **       ** **      **   **           **        **     **    **     **   **         **" << endl;
-		cout << "** * **      **   **      **   **     **    **          **        ** *  **    **       **    ****       ****" << endl;
-		cout << "**   **      **   **     ** *** **    **   **           **        **   **      **     **         **         **" << endl;
-		cout << "**    **     *******    **       **   ******            ******    **    **      *******    *****      *****" << endl;*/
-		gotoXY(20, 10); cout << " =====  =======   ======   =====  ===== ==== ===       =======" << endl;
-		gotoXY(20, 11); cout << "||     ||     |  ||	   |  ||     ||	     ||	||  \\   | ||  " << endl;
-		gotoXY(20, 12); cout << "||     ||_____|  ||	   |  ||___  ||___   ||	||   \\  | ||   ====  " << endl;
-		gotoXY(20, 13); cout << "||     ||   \\    ||    |       |     |   ||	||    \\ | ||_____||         	" << endl;
-		gotoXY(20, 14); cout << " =========== \\    ======   ===== =====  ==== ======   ======      /\\      ====\\\\" << endl;
-		gotoXY(20, 15); cout << "                                            ||     | ||    |     // \\    ||	   |" << endl;
-		gotoXY(20, 16); cout << "                                            || ====  ||    |    //   \\   ||	   |" << endl;
-		gotoXY(20, 17); cout << "                                            ||   \\\\  ||    |   //  ===\\  ||	   |" << endl;
-		gotoXY(20, 18); cout << "                                            ||    \\\\  ======  //	   \\  ====//" << endl;
-		TextColor(7);
-		for (int i = 0; i < 4; i++) {
-			gotoXY(x, y + i);
-			if (i == pos)
-			{
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+				//TextColor(7);
+				int color = rand() % 7 + 9;
+				TextColor(color);
+				/*	cout << "******       *******        **        ******            ******    *******       *******      *******    *******" << endl;
+				cout << "**    **     **   **       ** **      **   **           **        **     **    **     **   **         **" << endl;
+				cout << "** * **      **   **      **   **     **    **          **        ** *  **    **       **    ****       ****" << endl;
+				cout << "**   **      **   **     ** *** **    **   **           **        **   **      **     **         **         **" << endl;
+				cout << "**    **     *******    **       **   ******            ******    **    **      *******    *****      *****" << endl;*/
+				gotoXY(20, 10); cout << " =====  =======   ======   =====  ===== ==== ===       =======" << endl;
+				gotoXY(20, 11); cout << "||     ||     |  ||	   |  ||     ||	     ||	||  \\   | ||  " << endl;
+				gotoXY(20, 12); cout << "||     ||_____|  ||	   |  ||___  ||___   ||	||   \\  | ||   ====  " << endl;
+				gotoXY(20, 13); cout << "||     ||   \\    ||    |       |     |   ||	||    \\ | ||_____||         	" << endl;
+				gotoXY(20, 14); cout << " =========== \\    ======   ===== =====  ==== ======   ======      /\\      ====\\\\" << endl;
+				gotoXY(20, 15); cout << "                                            ||     | ||    |     // \\    ||	   |" << endl;
+				gotoXY(20, 16); cout << "                                            || ====  ||    |    //   \\   ||	   |" << endl;
+				gotoXY(20, 17); cout << "                                            ||   \\\\  ||    |   //  ===\\  ||	   |" << endl;
+				gotoXY(20, 18); cout << "                                            ||    \\\\  ======  //	   \\  ====//" << endl;
+				TextColor(7);
 			}
-			else
-			{
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-			}
-			cout << choice[i] << endl;
-		}
-		while (true)
-		{
+			changeInput = false;
 			switch (inputKey()) {
+				changeInput = true;
 				PlaySound(TEXT("RING.wav"), NULL, SND_ASYNC);
 			case 'w':
+				changeInput = true;
 				pos--;
 				pos = (pos + 4) % 4;
 				break;
 			case 's':
+				changeInput = true;
 				pos++;
 				pos %= 4;
 				break;
@@ -180,16 +187,18 @@ void cGame::menu() {
 					while (1) {
 						loading();
 						//if (!constantVar::isMute)PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
-						
+
 						if (newGame()) {
 							Sleep(1000);
 							clrscr();
+							changeInput = true;
 							break;//return; // thang nhung k choi tiep
 							Sleep(1000);
 						}
 						else if (!continueMenu()) {
 							Sleep(1000);
 							clrscr();
+							changeInput = true;
 							break;//return; //thua nhung khong choi tiep
 						}
 					}
@@ -197,19 +206,36 @@ void cGame::menu() {
 				case 1: {
 					Sleep(1000);
 					loadGameMenu();
+					while (1) {
+						loading();
+						//if (!constantVar::isMute)PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
+
+						if (newGame()) {
+							Sleep(1000);
+							clrscr();
+							changeInput = true;
+							break;//return; // thang nhung k choi tiep
+							Sleep(1000);
+						}
+						else if (!continueMenu()) {
+							Sleep(1000);
+							clrscr();
+							changeInput = true;
+							break;//return; //thua nhung khong choi tiep
+						}
+					}
 				}break;
 				case 2: {
 					Sleep(500);
 					gameSettings();
+					changeInput = true;
 				}break;
 				case 3:
 					return;
 				}
 				break;
 			}
-			break;
 		}
-		Sleep(300);
 	}
 }
 
@@ -267,20 +293,14 @@ bool cGame::continueMenu() {
 bool cGame::newGame() { // start a new game, initialize cMap map
 	
 	char key;
-	map.~cMap();
-	new(&map) cMap();
+	if (!isLoaded) {
+		map.~cMap();
+		new(&map) cMap();
+	}
+	isPausing = false;
 	map.printMap();
-	map.initializeNewState();
-
-	gotoXY(125, 5); cout << "CONTROL MANUAL" << endl;
-	gotoXY(125, 6); cout << "[ W ]: UP" << endl;
-	gotoXY(125, 7); cout << "[ S ]: DOWN" << endl;
-	gotoXY(125, 8); cout << "[ A ]: LEFT" << endl;
-	gotoXY(125, 9); cout << "[ D ]: RIGHT" << endl;
-	gotoXY(125, 11); cout << "COMMANDS" << endl;
-	gotoXY(125, 12); cout << "[ L ]: Save game" << endl;
-	gotoXY(125, 13); cout << "[ T ]: Load game" << endl;
-	gotoXY(125, 14); cout << "[ P ]: Pause game/Menu" << endl;
+	if(!isLoaded) map.initializeNewState();
+	isLoaded = false;
 
 	const string choice[3] = { "Save Game","Load Game","Quit" };
 	int pos = 0;
@@ -288,6 +308,7 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 		if (!isPausing) {
 			map.randomNextState();
 		}
+
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 		gotoXY(125, 19); cout << "PAUSE MENU" << endl;
 		int x = 125, y = 22;
@@ -311,12 +332,11 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 			{
 				//Save
 				// call saveGame of cGame to get name of file
-				map.saveGame("minh");
+				saveGameMenu();
 			}
 			if (key == 't')
 			{
-				map.loadGame("minh");
-				newGame();
+				loadGameMenu();
 			}
 			if (key == 'p')
 			{
@@ -339,8 +359,130 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 			if (key == 's')
 			{
 				if (!isPausing) map.updatePosPlayer('s');
-				pos++;
-				pos %= 3;
+				else {
+					pos++;
+					pos %= 3;
+				}
+			}
+			if (key == 'd')
+			{
+				if (!isPausing) map.updatePosPlayer('d');
+			}
+			if (isPausing && key == 13) {
+				switch (pos) {
+				case 0:
+					saveGameMenu();
+					break;
+				case 1:
+					clrscr();
+					loadGameMenu();
+					clrscr();
+					togglePauseGame();
+					map.redrawMap();
+					break;
+				case 2:
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+					return true;
+				}
+			}
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+			map.drawPlayer();
+			map.drawMap();
+		}
+		if (map.isWin()) {
+			if (!constantVar::isMute)PlaySound(TEXT("CompleteStage.wav"), NULL, SND_ASYNC);
+			if (map.printLevelUp()) {
+				clrscr();
+				map.nextLevel();
+				map.printMap();
+				map.deleteOldPlayer();
+				map.initializeNewState();
+				map.drawPlayer();
+			}
+			else return true;
+		}
+	}
+	return false;
+}
+
+bool cGame::continueGame()
+{
+	char key;
+	isPausing = false;
+	map.printMap();
+	map.initializeNewState();
+	/*
+	gotoXY(125, 5); cout << "CONTROL MANUAL" << endl;
+	gotoXY(125, 6); cout << "[ W ]: UP" << endl;
+	gotoXY(125, 7); cout << "[ S ]: DOWN" << endl;
+	gotoXY(125, 8); cout << "[ A ]: LEFT" << endl;
+	gotoXY(125, 9); cout << "[ D ]: RIGHT" << endl;
+	gotoXY(125, 11); cout << "COMMANDS" << endl;
+	gotoXY(125, 12); cout << "[ L ]: Save game" << endl;
+	gotoXY(125, 13); cout << "[ T ]: Load game" << endl;
+	gotoXY(125, 14); cout << "[ P ]: Pause game/Menu" << endl;
+	*/
+	const string choice[3] = { "Save Game","Load Game","Quit" };
+	int pos = 0;
+	while (!map.isEnd()) {
+		if (!isPausing) {
+			map.randomNextState();
+		}
+
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+		gotoXY(125, 19); cout << "PAUSE MENU" << endl;
+		int x = 125, y = 22;
+		for (int i = 0; i < 3; i++) {
+			gotoXY(x, y + i);
+			if (isPausing && i == pos)
+			{
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+			}
+			else
+			{
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+			}
+			cout << choice[i] << endl;
+		}
+
+		if (kbhit())
+		{
+			key = getch();
+			if (key == 'l')
+			{
+				//Save
+				// call saveGame of cGame to get name of file
+				saveGameMenu();
+			}
+			if (key == 't')
+			{
+				loadGameMenu();
+			}
+			if (key == 'p')
+			{
+				togglePauseGame();
+				pos = 0; // reset pause menu selection
+			}
+			if (key == 'a')
+			{
+				if (!isPausing) map.updatePosPlayer('a');
+			}
+			if (key == 'w')
+			{
+				if (!isPausing) map.updatePosPlayer('w');
+				else {
+					pos--;
+					pos = (pos + 3) % 3;
+				}
+
+			}
+			if (key == 's')
+			{
+				if (!isPausing) map.updatePosPlayer('s');
+				else {
+					pos++;
+					pos %= 3;
+				}
 			}
 			if (key == 'd')
 			{
@@ -378,6 +520,7 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 	}
 	return false;
 }
+
 
 void cGame::loading()
 {
@@ -427,23 +570,61 @@ vector<string> cGame::getAllFilename(const string& name)
 
 void cGame::loadGameMenu() { // get file of cMap map
 	string filename;
-	gotoXY(125, 25); 
-	cout << "Input name to load: " << endl;
-	getline(cin, filename);
-	//file = file + ".txt";
 	clrscr();
-	//map.loadGame(filename);
-
-
+	vector <string> files = getAllFilename("data");
+	if (files.size() == 0) {
+		gotoXY(30, 15);
+		cout << "No saved file to load !!!";
+		Sleep(1000);
+		return;
+	}
+	int curPos = 0;
+	while (true) {
+		clrscr(); 
+		gotoXY(30, 15);
+		cout << "Choose Filename to load: ";
+		for (int i = 0; i < (int)files.size(); ++i) {
+			if (i == curPos) {
+				gotoXY(26, 16 + i);
+				cout << ">> ";
+			}
+			gotoXY(30, 16 + i);
+			cout << files[i] << endl;
+		}
+		if (kbhit())
+		{
+			char key=getch();
+			if (key == 'w')
+			{
+				curPos--;
+				curPos = (curPos + files.size()) % files.size();
+			}
+			if (key == 's')
+			{
+				++curPos;
+				curPos = (curPos + files.size()) % files.size();
+			}
+			if (key == 13)
+			{
+				isLoaded = true;
+				map.loadGame(files[curPos]);
+				return;
+			}
+		}
+		Sleep(200);
+	}
 }
 
 void cGame::saveGameMenu() { // get file of cMap map
 	string filename;
-	gotoXY(125, 25);
-	cout << "Input name to load: " << endl;
-	getline(cin, filename);
-	//file = file + ".txt";
 	clrscr();
+	gotoXY(35, 25);
+	cout << "Input Save name: ";
+	getline(cin, filename);
+	clrscr();
+	map.redrawMap();
+	isPausing = false;
+	//file = file + ".txt";
 	map.saveGame(filename);
 }
 

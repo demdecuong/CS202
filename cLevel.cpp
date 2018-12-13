@@ -13,9 +13,9 @@ cLevel::cLevel(int level, int nEnemy) {
 }
 
 void cLevel::initialize() {
-	int difficulty = 1000, maxE = 20;
-	if (constantVar::isHard) difficulty = 50, maxE = 200;
-	nRow = min(10, 3 + (level / 3));
+	int difficulty = 400, maxE = 20;
+	if (constantVar::isHard) difficulty = 40, maxE = 200;
+	nRow = 10;
 	maxEnemy = min(maxE, nRow * 10);
 	maxSpeed = difficulty- level * 3;
 	minSpeed = difficulty - level * 2;

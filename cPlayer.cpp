@@ -40,6 +40,40 @@ cPlayer::cPlayer() : isDead(false) {
 
 cPlayer::cPlayer(cPosition pos) : isDead(false) {
 	pos.setPos(pos.getX(), pos.getY());
+	a = new char*[3];
+	emptyPlayer = new char*[3];
+	for (int i = 0; i < 3; ++i) {
+		emptyPlayer[i] = new char[5];
+		for (int j = 0; j < 5; ++j) {
+			emptyPlayer[i][j] = ' ';
+		}
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		a[i] = new char[5];
+	}
+	//Row1
+	for (int i = 0; i < 5; i++) {
+		if (i == 2)
+			a[0][i] = 'O';
+		else
+			a[0][i] = ' ';
+	}
+	//Row2
+	for (int i = 0; i < 5; i++) {
+		if (i == 0)	a[1][i] = '/';
+		if (i == 1)	a[1][i] = '(';
+		if (i == 2)	a[1][i] = '_';
+		if (i == 3)	a[1][i] = ')';
+		if (i == 4)	a[1][i] = '\\';
+	}
+	//Row3
+	for (int i = 0; i < 5; i++) {
+		if (i == 1)	a[2][i] = '/';
+		else if (i == 3)	a[2][i] = '\\';
+		else a[2][i] = ' ';
+	}
+
 }
 
 cPlayer::~cPlayer()

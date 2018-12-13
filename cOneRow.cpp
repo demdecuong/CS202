@@ -33,24 +33,24 @@ int cOneRow::moveToNextState(int t) {
 	if ((redLight && (rand() % 8 == 0)) || (!redLight && (rand() % 15 == 0)) || (t == 0)) {
 		toggleRedLight();
 		// Display Traffic Light
-		if (redLight) {
-			TextColor(12);
-		}
-		else {
-			TextColor(10);
-		}
-		if (direction)
-		{
-			gotoXY(RIGHTMAP + 60, currentRow);
-		}
-		else
-		{
-			gotoXY(LEFTMAP - 1, currentRow);
-		}
-		cout << (char)254;
-		TextColor(7);
 		//
 	}
+	if (redLight) {
+		TextColor(12);
+	}
+	else {
+		TextColor(10);
+	}
+	if (direction)
+	{
+		gotoXY(RIGHTMAP + 60, currentRow);
+	}
+	else
+	{
+		gotoXY(LEFTMAP - 1, currentRow);
+	}
+	cout << (char)254;
+	TextColor(7);
 	if (((t % speed) != 0) && t != 0) return nDelete;
 	if (redLight) return nDelete;
 	vector <cEnemy*> newEnemy;

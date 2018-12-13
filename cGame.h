@@ -16,7 +16,8 @@
 using namespace std;
 
 class cGame
-{
+{	
+	bool isLoaded = false;
 	cMap map;
 	bool isPausing = false;
 public:
@@ -30,6 +31,8 @@ public:
 	void menu(bool &isFinish);
 
 	bool newGame(); // start a new game, initialize cMap map
+
+	bool continueGame();  //continue our game
 
 	void loadGameMenu(); // get file of cMap map
 

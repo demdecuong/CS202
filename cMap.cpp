@@ -47,9 +47,17 @@ void cMap::printMap()
 	/*gotoXY(15, 5); cout << "**** **** **** ***  ***  ** **   *  *****     *******      ###   ###" << endl;
 	gotoXY(15, 6); cout << "*    ***  *  *   **   ** ** ** * *  *  **       **     *     ###   ###" << endl;
 	gotoXY(15, 7); cout << "**** *  * **** **   **   ** **  **  *****    ******     **      *    ###   ###" << endl;*/
-	gotoXY(125, 3); cout << "LV. " << level.getLevel() << endl;
-
 	
+	gotoXY(125, 3); cout << "LV. " << level.getLevel() << endl;
+	gotoXY(125, 5); cout << "CONTROL MANUAL" << endl;
+	gotoXY(125, 6); cout << "[ W ]: UP" << endl;
+	gotoXY(125, 7); cout << "[ S ]: DOWN" << endl;
+	gotoXY(125, 8); cout << "[ A ]: LEFT" << endl;
+	gotoXY(125, 9); cout << "[ D ]: RIGHT" << endl;
+	gotoXY(125, 11); cout << "COMMANDS" << endl;
+	gotoXY(125, 12); cout << "[ L ]: Save game" << endl;
+	gotoXY(125, 13); cout << "[ T ]: Load game" << endl;
+	gotoXY(125, 14); cout << "[ P ]: Pause game/Menu" << endl;
 	
 	drawPlayer();
 }
@@ -165,6 +173,13 @@ void cMap::randomNextState() {
 	drawMap();
 }
 
+void cMap::redrawMap() {
+	printMap();
+	int tmp = rowsData.moveToNextState(t);
+	level.decNEnemy(tmp);
+	drawMap();
+}
+
 void cMap::updatePosPlayer(char moving) {
 	deleteOldPlayer();
 	if (moving == 'a' || moving == 'A') player.Left();
@@ -255,7 +270,7 @@ void cMap::saveGame(string file)
 }
 
 bool cMap::loadGame(string file) {
-	ifstream infile("./data/" + file + ".bin", ios::in | ios::binary);
+	ifstream infile("./data/" + file, ios::in | ios::binary);
 	if (!infile.is_open()) {
 		return false;
 	}
@@ -265,7 +280,8 @@ bool cMap::loadGame(string file) {
 	int playerX, playerY;
 	playerX = readInt(infile);
 	playerY = readInt(infile);
-	player = cPlayer(cPosition(playerX, playerY));
+	player.~cPlayer();
+	new(&player) cPlayer(cPosition(playerX, playerY));
 
 	int nEnemy = 0;
 
