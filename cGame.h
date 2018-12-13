@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <thread>
+#include <dirent.h>
 
 #include "cConsole.h"
 #include "cPlayer.h"
@@ -47,6 +48,8 @@ public:
 	void testThread();
 
 	void loading();
+
+	vector<string> getAllFilename(const std::string& name);
 
 	void menu();
 	bool continueMenu();

@@ -340,9 +340,35 @@ void cGame::loading()
 		gotoXY(30 + 25, 26);
 		cout << i * 2 << "%";
 	}
-	//Sleep(2000);
-	//system("pause");
+
 }
+
+vector<string> cGame::getAllFilename(const string& name)
+{
+		vector<string> v;
+		string pattern(name);
+		pattern.append("\\*");
+		std::wstring stemp = std::wstring(pattern.begin(), pattern.end());
+		LPCWSTR sw = stemp.c_str();
+		WIN32_FIND_DATA data;
+		HANDLE hFind;
+		if ((hFind = FindFirstFile(sw, &data)) != INVALID_HANDLE_VALUE) {
+			do {
+				wchar_t* txt = data.cFileName;
+				wstring ws(txt);
+				// your new String
+				string str(ws.begin(), ws.end());
+				if (str[0] == '.') continue;
+				// Show String
+				v.push_back(str);
+				//Just test !
+				//cout << str << endl;
+			} while (FindNextFile(hFind, &data) != 0);
+			FindClose(hFind);
+		}
+		return v;
+}
+
 
 void cGame::loadGame() { // get file of cMap map
 	ifstream infile;

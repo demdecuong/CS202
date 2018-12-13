@@ -21,7 +21,9 @@ int main() {
 	//DisableMouse();
 
 	cGame game;
-	game.menu();
+	game.getAllFilename("data");
+
+	//game.menu();
 	
 
 
