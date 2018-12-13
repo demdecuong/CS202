@@ -94,6 +94,7 @@ void cGame::gameSettings() {
 						toggleMute();
 						if (constantVar::isMute) {
 							currentSettting[1] = "OFF";
+							if (constantVar::isMute)PlaySound(NULL("PUBG.wav"), NULL, SND_APPLICATION);
 						}
 						else {
 							currentSettting[1] = "ON";
