@@ -30,9 +30,11 @@ public:
 
 	bool newGame(); // start a new game, initialize cMap map
 
-	void loadGame(); // get file of cMap map
+	void loadGameMenu(); // get file of cMap map
 
-					 //void saveGame(); // print file of cMap map
+	void saveGameMenu(); //void saveGame(); // print file of cMap map
+
+	void pauseMenu(int cmd);
 
 	void togglePauseGame(); // toggle status of isPausing
 

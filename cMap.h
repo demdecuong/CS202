@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <thread>
+#include <cmath>
 #include "cPlayer.h"
 #include "cPosition.h"
 #include "cRows.h"

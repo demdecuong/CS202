@@ -156,7 +156,7 @@ void cGame::menu() {
 			switch (inputKey()) {
 			case 'w':
 				pos--;
-				pos %= 4;
+				pos = (pos + 4) % 4;
 				break;
 			case 's':
 				pos++;
@@ -170,19 +170,19 @@ void cGame::menu() {
 						if (newGame()) {
 							Sleep(1000);
 							clrscr();
-							return; // thang nhung k choi tiep
+							break;//return; // thang nhung k choi tiep
 							Sleep(1000);
 						}
-						if (!continueMenu()) {
+						else if (!continueMenu()) {
 							Sleep(1000);
 							clrscr();
-							return; //thua nhung khong choi tiep
+							break;//return; //thua nhung khong choi tiep
 						}
 					}
 					break;
 				case 1: {
 					Sleep(1000);
-					loadGame();
+					loadGameMenu();
 				}break;
 				case 2: {
 					Sleep(1000);
@@ -246,18 +246,53 @@ bool cGame::continueMenu() {
 
 }
 
+//void cGame::pauseMenu(int cmd) {
+//	
+//}
+
 bool cGame::newGame() { // start a new game, initialize cMap map
+	
+	char key;
 	map.~cMap();
 	new(&map) cMap();
 	map.printMap();
 	map.initializeNewState();
+
+	gotoXY(125, 5); cout << "CONTROL MANUAL" << endl;
+	gotoXY(125, 6); cout << "[ W ]: UP" << endl;
+	gotoXY(125, 7); cout << "[ S ]: DOWN" << endl;
+	gotoXY(125, 8); cout << "[ A ]: LEFT" << endl;
+	gotoXY(125, 9); cout << "[ D ]: RIGHT" << endl;
+	gotoXY(125, 11); cout << "COMMANDS" << endl;
+	gotoXY(125, 12); cout << "[ L ]: Save game" << endl;
+	gotoXY(125, 13); cout << "[ T ]: Load game" << endl;
+	gotoXY(125, 14); cout << "[ P ]: Pause game/Menu" << endl;
+
+	const string choice[3] = { "Save Game","Load Game","Quit" };
+	int pos = 0;
 	while (!map.isEnd()) {
 		if (!isPausing) {
 			map.randomNextState();
 		}
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+		gotoXY(125, 19); cout << "PAUSE MENU" << endl;
+		int x = 125, y = 22;
+		for (int i = 0; i < 3; i++) {
+			gotoXY(x, y + i);
+			if (isPausing && i == pos)
+			{
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+			}
+			else
+			{
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+			}
+			cout << choice[i] << endl;
+		}
+			
 		if (kbhit())
 		{
-			char key = getch();
+			key = getch();
 			if (key == 'l')
 			{
 				//Save
@@ -271,24 +306,45 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 			if (key == 'p')
 			{
 				togglePauseGame();
+				pos = 0; // reset pause menu selection
 			}
-			if (isPausing) continue;
 			if (key == 'a')
 			{
-				map.updatePosPlayer('a');
+				if (!isPausing) map.updatePosPlayer('a');
 			}
 			if (key == 'w')
 			{
-				map.updatePosPlayer('w');
+				if(!isPausing) map.updatePosPlayer('w');
+				else {
+					pos--;
+					pos = (pos + 3) % 3;
+				}
+
 			}
 			if (key == 's')
 			{
-				map.updatePosPlayer('s');
+				if (!isPausing) map.updatePosPlayer('s');
+				pos++;
+				pos %= 3;
 			}
 			if (key == 'd')
 			{
-				map.updatePosPlayer('d');
+				if (!isPausing) map.updatePosPlayer('d');
 			}
+			if (isPausing && key == 13) {
+				switch (pos) {
+				case 0:
+					saveGameMenu();
+					break;
+				case 1:
+					loadGameMenu();
+					break;
+				case 2:
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+					return true;
+				}
+			}
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 			map.drawPlayer();
 			map.drawMap();
 		}
@@ -326,63 +382,26 @@ void cGame::loading()
 	//system("pause");
 }
 
-void cGame::loadGame() { // get file of cMap map
-	ifstream infile;
-	string file;
-	gotoXY(80 / 2, 20 + 2); //width=115, height=35
+void cGame::loadGameMenu() { // get file of cMap map
+	string filename;
+	gotoXY(125, 25); 
 	cout << "Input name to load: " << endl;
-	getline(cin, file);
-	file = file + ".txt";
+	getline(cin, filename);
+	//file = file + ".txt";
 	clrscr();
-	infile.open(file, ios::in);
-	if (infile.fail()) {
-		gotoXY(115 / 2, 35 / 2);
-		TextColor(ColorCode_Green);
-		cout << "Data does not exist" << endl;
-		TextColor(7);
-		system("pause");
-		clrscr();
-		return;
-	}
-	/*delete[] car;
-	delete[] truck;
-	delete[] bird;
-	delete[] dinausor;
-	infile >> level;
-	car = new cCar[level];
-	truck = new cTruck[level];
-	bird = new cBird[level];
-	dinausor = new cDinausor[level];
-	*/
-	int x, y;
-	infile >> x;
-	infile >> y;
-	/*player.set(x, y);
-	for (int i = 0; i < level; i++) {
-	infile >> x;
-	infile >> y;
-	//   car[i].set(x, y);
-	}
-	for (int i = 0; i < level; i++)
-	{
-	infile >> x;
-	infile >> y;
-	//  truck[i].set(x, y);
-	}
-	for (int i = 0; i < level; i++)
-	{
-	infile >> x;
-	infile >> y;
-	//   bird[i].set(x, y);
-	}
-	for (int i = 0; i < level; i++)
-	{
-	infile >> x;
-	infile >> y;
-	//   dinausor[i].set(x, y);
-	}
-	*/
-	infile.close();
+	//map.loadGame(filename);
+
+
+}
+
+void cGame::saveGameMenu() { // get file of cMap map
+	string filename;
+	gotoXY(125, 25);
+	cout << "Input name to load: " << endl;
+	getline(cin, filename);
+	//file = file + ".txt";
+	clrscr();
+	map.saveGame(filename);
 }
 
 void cGame::togglePauseGame() { // toggle status of isPausing
