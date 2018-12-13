@@ -310,7 +310,6 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 		}
 
 		int x = 125, y = 22;
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
 		if (isPausing) {
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 			gotoXY(125, 19); cout << "PAUSE MENU" << endl;
