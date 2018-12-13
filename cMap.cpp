@@ -40,6 +40,17 @@ void cMap::printMap()
 		}
 		cout << endl;
 	}
+	//gotoXY(1, height + 10);
+	//cout << "  L = Save Game | T = Load Game | P = Pause Game" << endl;
+
+	gotoXY(125, 1); cout << "<Crossing Road Game>";
+	/*gotoXY(15, 5); cout << "**** **** **** ***  ***  ** **   *  *****     *******      ###   ###" << endl;
+	gotoXY(15, 6); cout << "*    ***  *  *   **   ** ** ** * *  *  **       **     *     ###   ###" << endl;
+	gotoXY(15, 7); cout << "**** *  * **** **   **   ** **  **  *****    ******     **      *    ###   ###" << endl;*/
+	gotoXY(125, 3); cout << "LV. " << level.getLevel() << endl;
+
+	
+	
 	drawPlayer();
 }
 
@@ -326,6 +337,7 @@ bool cMap::printLevelUp() {
 		switch (inputKey()) {
 		case 'w':
 			pos--;
+			pos = abs(pos);
 			pos %= 2;
 			break;
 		case 's':
