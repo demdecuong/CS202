@@ -625,6 +625,8 @@ void cGame::loadGameMenu() { // get file of cMap map
 			{
 				isLoaded = true;
 				map.loadGame(files[curPos]);
+				clrscr();
+				map.redrawMap();
 				return;
 			}
 			if (key == 27)
