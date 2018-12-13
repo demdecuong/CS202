@@ -6,7 +6,7 @@
 #include <conio.h>
 #include <time.h>
 
-static bool isMute = false;
+//static bool isMute = false;
 
 #define ColorCode_Back			0
 #define ColorCode_DarkBlue		1
@@ -62,6 +62,12 @@ void FixConsoleWindow();
 
 void DisableMouse();
 
+
+class constantVar {
+public:
+	static bool isMute;
+	static bool isHard;
+};
 
 void drawTitle();
 #endif

@@ -49,7 +49,7 @@ void cMap::drawMap() {
 	for (int i = 0; i < (int)enemyList.size(); ++i) {
 		//drawEnemies(enemyList[i]);
 		if (player.crash(enemyList[i]->getPos(), enemyList[i]->getWidth() - 3, enemyList[i]->getHeight())) {
-			if (!isMute) enemyList[i]->sound();
+			if (!constantVar::isMute) enemyList[i]->sound();
 			player.killPlayer();
 			//randomNextState();
 			deleteOldPlayer();

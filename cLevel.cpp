@@ -13,10 +13,12 @@ cLevel::cLevel(int level, int nEnemy) {
 }
 
 void cLevel::initialize() {
+	int difficulty = 1000, maxE = 20;
+	if (constantVar::isHard) difficulty = 50, maxE = 200;
 	nRow = min(10, 3 + (level / 3));
-	maxEnemy = min(100, nRow * 10);
-	maxSpeed = 100 - level * 3;
-	minSpeed = 100 - level * 2;
+	maxEnemy = min(maxE, nRow * 10);
+	maxSpeed = difficulty- level * 3;
+	minSpeed = difficulty - level * 2;
 }
 
 int cLevel::getLevel() {
@@ -47,7 +49,7 @@ int cLevel::getMinSpeed() {
 }
 
 cEnemy * cLevel::randNewEnemy(cPosition pos) {
-	//if (nEnemy == maxEnemy) return NULL;
+	if (nEnemy == maxEnemy) return NULL;
 	if ((nEnemy < (maxEnemy / 2)) || (rand() % 3)) {
 		++nEnemy;
 		cEnemy * pEnemy = NULL;

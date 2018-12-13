@@ -93,25 +93,25 @@ int cPlayer::getWidth() {
 }
 
 void cPlayer::Up() {
-	if(!isMute && !isDead)sound();
+	sound();
 	if (pos.getX() <= 3) return;
 	pos.setPos(pos.getX() - 3, pos.getY());
 }
 
 void cPlayer::Down() {
-	if (!isMute && !isDead)sound();
+	sound();
 	if (pos.getX() + 3 > 34) return;
 	pos.setPos(pos.getX() + 3, pos.getY());
 }
 
 void cPlayer::Left() {
-	if (!isMute && !isDead)sound();
+	sound();
 	if (pos.getY() <= LEFTMAP) return;
 	pos.setPos(pos.getX(), pos.getY() - 1);
 }
 
 void cPlayer::Right() {
-	if (!isMute && !isDead)sound();
+	sound();
 	if (pos.getY() + 2 >= RIGHTMAP) return;
 	pos.setPos(pos.getX(), pos.getY() + 1);
 }
@@ -143,5 +143,6 @@ bool cPlayer::crash(cPosition pos, int w, int h) {
 
 void cPlayer::sound()
 {
+	if(!constantVar::isMute && !isDead)
 	PlaySound(TEXT("RING.wav"), NULL, SND_ASYNC);
 }

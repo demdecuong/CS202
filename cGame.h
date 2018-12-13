@@ -38,6 +38,8 @@ public:
 
 	void toggleMute();
 
+	void toggleHard();
+
 	void gameOver();
 
 	void playGame(bool &is_finish);
@@ -49,5 +51,6 @@ public:
 	void menu();
 	bool continueMenu();
 };
+
 void SubThread(cGame*cg, bool *IS_RUNNING, bool *isPausing, bool *exitFlag);
 #endif // cGame

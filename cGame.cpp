@@ -78,12 +78,21 @@ void cGame::gameSettings() {
 				if (key == 13) {
 					switch (pos1) {
 					case 0: {
-						flag = 1;
+						//Game mode : easy || hard
+						toggleHard();
+						if (constantVar::isHard) {
+							currentSettting[0] = "HARD";
+						}
+						else
+						{
+							currentSettting[0] = "EASY";
+							if(!constantVar::isMute)PlaySound(TEXT("RING.wav"), NULL, SND_ASYNC);
+						}
 						break;
 					}
 					case 1: {
 						toggleMute();
-						if ((bool)isMute) {
+						if (constantVar::isMute) {
 							currentSettting[1] = "OFF";
 						}
 						else {
@@ -119,6 +128,7 @@ void cGame::menu() {
 	const string choice[4] = { "New Game","Load Game","Settings","Quit" };
 	int pos = 0;
 	int x = 35, y = 20;
+	if (!constantVar::isMute)PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
 	while (true) {
 		system("cls");
 
@@ -169,6 +179,8 @@ void cGame::menu() {
 				case 0:
 					while (1) {
 						loading();
+						//if (!constantVar::isMute)PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
+						
 						if (newGame()) {
 							Sleep(1000);
 							clrscr();
@@ -183,11 +195,11 @@ void cGame::menu() {
 					}
 					break;
 				case 1: {
-					Sleep(1000);
+					Sleep(590);
 					loadGame();
 				}break;
 				case 2: {
-					Sleep(1000);
+					Sleep(500);
 					gameSettings();
 				}break;
 				case 3:
@@ -197,7 +209,7 @@ void cGame::menu() {
 			}
 			break;
 		}
-		Sleep(200);
+		Sleep(300);
 	}
 }
 
@@ -296,6 +308,7 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 			map.drawMap();
 		}
 		if (map.isWin()) {
+			if (!constantVar::isMute)PlaySound(TEXT("CompleteStage.wav"), NULL, SND_ASYNC);
 			if (map.printLevelUp()) {
 				clrscr();
 				map.nextLevel();
@@ -312,7 +325,8 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 
 void cGame::loading()
 {
-	if(!isMute)PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
+	//if(!constantVar::isMute)PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
+	if (!constantVar::isMute)PlaySound(TEXT("RaceStart.wav"), NULL, SND_ASYNC);
 	map.printMap();
 	map.deleteOldPlayer();
 	drawTitle();
@@ -320,12 +334,13 @@ void cGame::loading()
 	cout << "[";
 	for (int i = 0; i <= 50; i++)
 	{
-		Sleep(40);
+		Sleep(35);
 		gotoXY(30 + i, 25);
 		cout << "=>";
 		gotoXY(30 + 25, 26);
 		cout << i * 2 << "%";
 	}
+	//Sleep(2000);
 	//system("pause");
 }
 
@@ -397,5 +412,11 @@ void cGame::gameOver() {
 };
 
 void cGame::toggleMute() {
-	isMute = !isMute;
+	constantVar::isMute = !constantVar::isMute;
+}
+
+
+void cGame::toggleHard()
+{
+	constantVar::isHard = !constantVar::isHard;
 }

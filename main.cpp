@@ -10,6 +10,10 @@
 #include "cCar.h"
 #include "cBird.h"
 
+bool constantVar::isMute = false;
+bool constantVar::isHard = true;
+
+
 using namespace std;
 
 int main() {

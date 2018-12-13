@@ -51,7 +51,7 @@ int cOneRow::moveToNextState(int t) {
 		TextColor(7);
 		//
 	}
-	if (((t % speed) == 0) && t != 0) return nDelete;
+	if (((t % speed) != 0) && t != 0) return nDelete;
 	if (redLight) return nDelete;
 	vector <cEnemy*> newEnemy;
 	newEnemy.reserve(100);
