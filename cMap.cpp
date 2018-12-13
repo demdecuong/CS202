@@ -175,7 +175,7 @@ void cMap::randomNextState() {
 
 void cMap::redrawMap() {
 	printMap();
-	int tmp = rowsData.moveToNextState(t);
+	int tmp = rowsData.moveToNextState(0);
 	level.decNEnemy(tmp);
 	drawMap();
 }

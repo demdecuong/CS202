@@ -197,6 +197,10 @@ void cGame::menu() {
 							Sleep(1000);
 						}
 						else if (!continueMenu()) {
+							if (isLoaded) {
+								map.~cMap();
+								new(&map) cMap;
+							}
 							Sleep(1000);
 							clrscr();
 							changeInput = true;
@@ -339,7 +343,12 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 			}
 			if (key == 't')
 			{
+				togglePauseGame();
 				loadGameMenu();
+				clrscr();
+				map.redrawMap();
+				togglePauseGame();
+				isLoaded = false;
 			}
 			if (key == 'p')
 			{
@@ -384,11 +393,11 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 					saveGameMenu();
 					break;
 				case 1:
-					clrscr();
 					loadGameMenu();
 					clrscr();
-					togglePauseGame();
 					map.redrawMap();
+					togglePauseGame();
+					isLoaded = false;
 					break;
 				case 2:
 					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
