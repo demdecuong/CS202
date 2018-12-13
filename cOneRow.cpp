@@ -51,7 +51,7 @@ int cOneRow::moveToNextState(int t) {
 	}
 	cout << (char)254;
 	TextColor(7);
-	if (((t % speed) != 0) && t != 0) return nDelete;
+	if (((t % speed) != 0) && t != 0) return nDelete; //test
 	if (redLight) return nDelete;
 	vector <cEnemy*> newEnemy;
 	newEnemy.reserve(100);
@@ -61,7 +61,8 @@ int cOneRow::moveToNextState(int t) {
 		if (direction) dy = 1;
 		deleteOldEnemy(curEnemy->getPos(), curEnemy->getWidth(), curEnemy->getHeight());
 		curEnemy->updatePosition(0, dy);
-		bool canPrint = printNewEnemy(curEnemy->getPos(), curEnemy->shape(), curEnemy->getWidth(), curEnemy->getHeight());
+		// Print Enemy
+		bool canPrint = printNewEnemy(curEnemy->getPos(), curEnemy->shape(), curEnemy->getWidth(), curEnemy->getHeight()); 
 		if (!canPrint) {
 			curEnemy->goOutMap();
 			++nDelete;
@@ -101,7 +102,6 @@ bool cOneRow::printNewEnemy(cPosition pos, char ** shape, int w, int h) {
 			cout << shape[i][j - max(1, Y)];
 		}
 	}
-	//Sleep(200);
 	return 1;
 }
 

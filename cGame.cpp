@@ -309,20 +309,23 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 			map.randomNextState();
 		}
 
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-		gotoXY(125, 19); cout << "PAUSE MENU" << endl;
 		int x = 125, y = 22;
-		for (int i = 0; i < 3; i++) {
-			gotoXY(x, y + i);
-			if (isPausing && i == pos)
-			{
 				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+		if (isPausing) {
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+			gotoXY(125, 19); cout << "PAUSE MENU" << endl;
+			for (int i = 0; i < 3; i++) {
+				gotoXY(x, y + i);
+				if (i == pos)
+				{
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+				}
+				else
+				{
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+				}
+				cout << choice[i] << endl;
 			}
-			else
-			{
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-			}
-			cout << choice[i] << endl;
 		}
 			
 		if (kbhit())
@@ -342,6 +345,13 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 			{
 				togglePauseGame();
 				pos = 0; // reset pause menu selection
+				if (!isPausing) { // map.redrawMap();
+					gotoXY(125, 19); cout << "                  " << endl;
+					for (int i = 0; i < 3; i++) {
+						gotoXY(x, y + i);
+						cout << "                 " << endl;
+					}
+				}
 			}
 			if (key == 'a')
 			{
@@ -452,11 +462,15 @@ bool cGame::continueGame()
 			{
 				//Save
 				// call saveGame of cGame to get name of file
+				togglePauseGame();
 				saveGameMenu();
+				togglePauseGame();
 			}
 			if (key == 't')
 			{
+				togglePauseGame();
 				loadGameMenu();
+				togglePauseGame();
 			}
 			if (key == 'p')
 			{
@@ -581,8 +595,11 @@ void cGame::loadGameMenu() { // get file of cMap map
 	int curPos = 0;
 	while (true) {
 		clrscr(); 
+		gotoXY(30, 13);
+		cout << "Press ESC to escape...";
 		gotoXY(30, 15);
 		cout << "Choose Filename to load: ";
+		
 		for (int i = 0; i < (int)files.size(); ++i) {
 			if (i == curPos) {
 				gotoXY(26, 16 + i);
@@ -610,22 +627,54 @@ void cGame::loadGameMenu() { // get file of cMap map
 				map.loadGame(files[curPos]);
 				return;
 			}
+			if (key == 27)
+			{
+				clrscr();
+				map.redrawMap();
+				return;
+			}
 		}
 		Sleep(200);
 	}
 }
 
-void cGame::saveGameMenu() { // get file of cMap map
+void cGame::saveGameMenu() { // get file of cMap ma
 	string filename;
 	clrscr();
-	gotoXY(35, 25);
+	map.printMap();
+	gotoXY(61, 20);
+	cout << "Press ESC to escape";
+	map.deleteOldPlayer();
+	gotoXY(41, 15);
 	cout << "Input Save name: ";
-	getline(cin, filename);
+	//getline(cin, filename);
+	char key;
+	while ((key = getch()) != 27 ) {
+		switch (key) {
+		case '\b':
+			if (filename.size() != 0) {
+				filename.pop_back();
+				gotoXY(50, 15);
+				cout << "                                                 ";
+				gotoXY(50, 15);
+				cout << filename;
+			}
+			break;
+		case 13:
+			map.saveGame(filename);
+			break;
+		default:
+			filename.push_back(key);
+			gotoXY(50, 15);
+			cout << filename;
+		}
+		if (key == 13) break;
+	}
 	clrscr();
 	map.redrawMap();
 	isPausing = false;
 	//file = file + ".txt";
-	map.saveGame(filename);
+	//map.saveGame(filename);
 }
 
 void cGame::togglePauseGame() { // toggle status of isPausing
