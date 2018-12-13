@@ -592,38 +592,48 @@ void cGame::loadGameMenu() { // get file of cMap map
 		return;
 	}
 	int curPos = 0;
-	while (true) {
-		clrscr(); 
-		gotoXY(30, 13);
-		cout << "Press ESC to escape...";
-		gotoXY(30, 15);
-		cout << "Choose Filename to load: ";
-		
-		for (int i = 0; i < (int)files.size(); ++i) {
-			if (i == curPos) {
-				gotoXY(26, 16 + i);
-				cout << ">> ";
-			}
-			gotoXY(30, 16 + i);
-			cout << files[i] << endl;
+	clrscr();
+	gotoXY(30, 13);
+	cout << "Press ESC to escape...";
+	gotoXY(30, 15);
+	cout << "Choose Filename to load: ";
+
+	for (int i = 0; i < (int)files.size(); ++i) {
+		if (i == curPos) {
+			gotoXY(26, 16 + i);
+			cout << ">> ";
 		}
+		gotoXY(30, 16 + i);
+		cout << files[i] << endl;
+	}
+	while (true) {
 		if (kbhit())
 		{
 			char key=getch();
 			if (key == 'w')
 			{
+				gotoXY(26, 16 + curPos);
+				cout << "    " << files[curPos];
 				curPos--;
 				curPos = (curPos + files.size()) % files.size();
+				gotoXY(26, 16 + curPos);
+				cout << ">>  " << files[curPos];
 			}
 			if (key == 's')
 			{
-				++curPos;
+				gotoXY(26, 16 + curPos);
+				cout << "    " << files[curPos];
+				curPos++;
 				curPos = (curPos + files.size()) % files.size();
+				gotoXY(26, 16 + curPos);
+				cout << ">>  " << files[curPos];
 			}
 			if (key == 13)
 			{
 				isLoaded = true;
 				map.loadGame(files[curPos]);
+				clrscr();
+				map.redrawMap();
 				return;
 			}
 			if (key == 27)
