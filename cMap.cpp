@@ -52,6 +52,9 @@ void cMap::drawMap() {
 			if (!isMute) enemyList[i]->sound();
 			player.killPlayer();
 			//randomNextState();
+			deleteOldPlayer();
+			drawPlayer();
+			Sleep(300);
 			clrscr();
 			printMap();
 			deleteOldPlayer();
@@ -208,6 +211,12 @@ void cMap::printInt(int x, ofstream& outfile) {
 	outfile.write((char*)&x, sizeof(int));
 }
 
+int cMap::readInt(ifstream& infile) {
+	int x;
+	infile.read((char*)&x, sizeof(int));
+	return x;
+}
+
 void cMap::saveGame(string file)
 {
 	ofstream outfile("./data/" + file + ".bin", ios::out | ios::binary);
@@ -217,27 +226,63 @@ void cMap::saveGame(string file)
 
 	vector <cOneRow*> rows(rowsData.listRow());
 	for (int i = 0; i < 10; ++i) {
-		//outfile.write((char*)rows[i]->getCurrentRow(), sizeof(rows[i]->getCurrentRow()));
 		printInt(rows[i]->getCurrentRow(), outfile);
-		//outfile.write((char*)rows[i]->getDirection(), sizeof(rows[i]->getDirection()));
-		printInt(rows[i]->getDirection(), outfile);
-		//outfile.write((char*)rows[i]->getSpeed(), sizeof(rows[i]->getSpeed()));
+		printInt((int)rows[i]->getDirection(), outfile);
 		printInt(rows[i]->getSpeed(), outfile);
-		//outfile.write((char*)rows[i]->getRedLight(), sizeof(rows[i]->getRedLight()));
-		printInt(rows[i]->getRedLight(), outfile);
+		printInt((int)rows[i]->getRedLight(), outfile);
+
 		vector <cEnemy*> enemy(rows[i]->getEnemy());
-		//outfile.write((char*)enemy.size(), sizeof(enemy.size()));
 		printInt((int)enemy.size(), outfile);
+
 		for (int j = 0; j < (int)enemy.size(); ++j) {
-			//outfile.write((char*)enemy[j]->getX(), sizeof(enemy[j]->getX()));
 			printInt(enemy[j]->getX(), outfile);
-			//outfile.write((char*)enemy[j]->getY(), sizeof(enemy[j]->getY()));
 			printInt(enemy[j]->getY(), outfile);
-			//outfile.write((char*)enemy[j]->getType(), sizeof(enemy[j]->getType()));
 			printInt(enemy[j]->getType(), outfile);
 		}
 	}
 	outfile.close();
+}
+
+bool cMap::loadGame(string file) {
+	ifstream infile("./data/" + file + ".bin", ios::in | ios::binary);
+	if (!infile.is_open()) {
+		return false;
+	}
+	int lv = readInt(infile);
+	level.~cLevel();
+	new(&level) cLevel(lv, 0);
+	int playerX, playerY;
+	playerX = readInt(infile);
+	playerY = readInt(infile);
+	player = cPlayer(cPosition(playerX, playerY));
+
+	int nEnemy = 0;
+
+	rowsData.~cRows();
+	new(&rowsData) cRows();
+
+	for (int i = 0; i < 10; ++i) {
+		int currentRow, direction, speed, redLight;
+		currentRow = readInt(infile);
+		direction = readInt(infile);
+		speed = readInt(infile);
+		redLight = readInt(infile);
+
+		rowsData.pushRow(new cOneRow(speed, direction, redLight, currentRow));
+		
+		int enemySize = readInt(infile);
+		nEnemy += enemySize;
+		
+		for (int j = 0; j < enemySize; ++j) {
+			int eX, eY, eType;
+			eX = readInt(infile);
+			eY = readInt(infile);
+			eType = readInt(infile);
+			rowsData.pushEnemy(i, level.getNewEnemy(cPosition(eX, eY), eType));
+		}
+	}
+	infile.close();
+	return true;
 }
 
 bool cMap::printLevelUp() {

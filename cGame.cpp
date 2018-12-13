@@ -88,6 +88,7 @@ void cGame::gameSettings() {
 						}
 						else {
 							currentSettting[1] = "ON";
+							PlaySound(TEXT("RING.wav"), NULL, SND_ASYNC);
 						}
 						//flag = 1;
 						break;
@@ -154,6 +155,7 @@ void cGame::menu() {
 		while (true)
 		{
 			switch (inputKey()) {
+				PlaySound(TEXT("RING.wav"), NULL, SND_ASYNC);
 			case 'w':
 				pos--;
 				pos %= 4;
@@ -266,7 +268,8 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 			}
 			if (key == 't')
 			{
-				//Load
+				map.loadGame("minh");
+				newGame();
 			}
 			if (key == 'p')
 			{
@@ -309,7 +312,7 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 
 void cGame::loading()
 {
-	PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
+	if(!isMute)PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
 	map.printMap();
 	map.deleteOldPlayer();
 	drawTitle();
@@ -394,12 +397,5 @@ void cGame::gameOver() {
 };
 
 void cGame::toggleMute() {
-	bool curMute = !isMute;
-	#undef isMute
-	if (curMute) {
-		#define isMute true
-	}
-	else {
-		#define isMute false
-	}
+	isMute = !isMute;
 }

@@ -27,6 +27,7 @@ public:
 	int getMaxSpeed();
 	int getMinSpeed();
 	cEnemy * randNewEnemy(cPosition pos);
+	cEnemy * getNewEnemy(cPosition pos, int type);
 	void decNEnemy(int d);
 };
 

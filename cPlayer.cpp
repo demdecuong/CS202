@@ -38,6 +38,10 @@ cPlayer::cPlayer() : isDead(false) {
 	}
 }
 
+cPlayer::cPlayer(cPosition pos) : isDead(false) {
+	pos.setPos(pos.getX(), pos.getY());
+}
+
 cPlayer::~cPlayer()
 {
 	for (int i = 0; i < 3; i++) {
@@ -84,7 +88,7 @@ int cPlayer::getHeight() {
 
 int cPlayer::getWidth() {
 
-	return width;
+	return width ;
 
 }
 
@@ -119,7 +123,18 @@ bool cPlayer::checkIsDead() {
 bool cPlayer::crash(cPosition pos, int w, int h) {
 	int magicConst = 3;
 	if (w == 5)magicConst = 2;
-	if (w == 3) magicConst = 1;
+	if (w == 3) { 
+		magicConst = 1; 
+		if (this->getX() == pos.getX())
+		{
+			if (this->getY() >= pos.getY() && pos.getY() + w -  magicConst >=  this->getY()) // crash while bird of left
+			{
+				return true;
+			}
+			if (getY() <= pos.getY() && pos.getY() - getY() <= 2) //crash while bird of right
+				return true;
+		}
+	}else
 	if (this->getX() == pos.getX() && max(getY(), pos.getY()) <= min(getY() + getWidth() - magicConst, pos.getY() + w - magicConst)) {
 		return true;
 	}

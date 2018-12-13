@@ -76,6 +76,31 @@ cEnemy * cLevel::randNewEnemy(cPosition pos) {
 	return NULL;
 }
 
+cEnemy * cLevel::getNewEnemy(cPosition pos, int type) {
+	++nEnemy;
+	cEnemy * pEnemy = NULL;
+	switch (type)
+	{
+	case 0: {
+		pEnemy = new cBird(pos);
+		break;
+	}
+	case 1: {
+		pEnemy = new cCar(pos);
+		break;
+	}
+	case 2: {
+		pEnemy = new cDinosaur(pos);
+		break;
+	}
+	default:
+		pEnemy = new cTruck(pos);
+		break;
+	}
+	//    pEnemy = new cEnemy(pos); //choose a random type of enemy
+	return pEnemy;
+}
+
 void cLevel::decNEnemy(int d) {
 	nEnemy -= d;
 }

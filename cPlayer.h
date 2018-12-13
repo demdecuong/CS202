@@ -4,6 +4,7 @@
 #define RIGHTMAP 58
 #define LEFTMAP 2
 
+#include "cConsole.h"
 #include "cPosition.h"
 #include "cEnemy.h"
 #include "cBird.h"
@@ -35,7 +36,7 @@ public:
 
 	cPosition getPos();
 
-	cPlayer(cPosition pos) {} // set current position when load game
+	cPlayer(cPosition pos); // set current position when load game
 
 	~cPlayer();
 

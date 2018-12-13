@@ -39,6 +39,7 @@ public:
 	void bombEffect();
 
 	void saveGame(string file);
+	bool loadGame(string file);
 
 	bool printLevelUp();
 	//check endgame
@@ -48,5 +49,6 @@ public:
 	void nextLevel();
 
 	void printInt(int x, ofstream& outfile);
+	int readInt(ifstream& infile);
 };
 #endif // cMap
