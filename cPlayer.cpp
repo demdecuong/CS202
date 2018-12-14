@@ -38,8 +38,8 @@ cPlayer::cPlayer() : isDead(false) {
 	}
 }
 
-cPlayer::cPlayer(cPosition pos) : isDead(false) {
-	pos.setPos(pos.getX(), pos.getY());
+cPlayer::cPlayer(cPosition pos) : isDead(false), pos(pos) {
+	//pos.setPos(pos.getX(), pos.getY());
 	a = new char*[3];
 	emptyPlayer = new char*[3];
 	for (int i = 0; i < 3; ++i) {
