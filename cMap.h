@@ -27,6 +27,7 @@ public:
 	~cMap() = default;
 	void resetMap(); // reset the map to default with no enemy and no player
 	void printMap(); // print map to screen
+	void printBorder();
 	void drawMap(); // draw all enemies and player
 	void redrawMap();
 	int draw(cPosition pos, char ** shape, int w, int h); // draw from position pos(x, y) shape(w, h) | 1: ok, 0: go out of map, -1: crash
@@ -43,8 +44,6 @@ public:
 	void saveGame(string file);
 	bool loadGame(string file);
 
-
-	void printCongrats();
 	bool printLevelUp();
 	//check endgame
 	bool isEnd();

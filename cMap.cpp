@@ -28,9 +28,7 @@ void cMap::resetMap() {
 	}
 }
 
-void cMap::printMap()
-{
-	//    TextColor(14);
+void cMap::printBorder() {
 	clrscr();
 	gotoXY(0, 0);
 	for (int i = 0; i <= height + 1; ++i) {
@@ -40,6 +38,12 @@ void cMap::printMap()
 		}
 		cout << endl;
 	}
+}
+
+void cMap::printMap()
+{
+	//    TextColor(14);
+	printBorder();
 	//gotoXY(1, height + 10);
 	//cout << "  L = Save Game | T = Load Game | P = Pause Game" << endl;
 
@@ -61,6 +65,7 @@ void cMap::printMap()
 	
 	drawPlayer();
 }
+
 
 void cMap::drawMap() {
 	//resetMap();
@@ -148,7 +153,7 @@ void cMap::initializeNewState() {
 		};
 	}
 	Sleep(200);
-	rowsData.moveToNextState(0);
+	rowsData.redrawState();
 }
 
 void cMap::randomNextState() {
@@ -175,8 +180,7 @@ void cMap::randomNextState() {
 
 void cMap::redrawMap() {
 	printMap();
-	int tmp = rowsData.moveToNextState(t);
-	level.decNEnemy(tmp);
+	rowsData.redrawState();
 	drawMap();
 }
 
@@ -306,17 +310,15 @@ bool cMap::loadGame(string file) {
 			eY = readInt(infile);
 			eType = readInt(infile);
 			rowsData.pushEnemy(i, level.getNewEnemy(cPosition(eX, eY), eType));
-			//Print enemy ?
 		}
 	}
 	infile.close();
 	return true;
 }
 
-void cMap::printCongrats()
-{
+bool cMap::printLevelUp() {
 	clrscr();
-	printMap();	
+	printMap();
 	deleteOldPlayer();
 	if (!constantVar::isMute)PlaySound(TEXT("CompleteStage.wav"), NULL, SND_ASYNC);
 	gotoXY(15, 15); cout << "_________                                              __            ._." << endl;
@@ -365,68 +367,8 @@ void cMap::printCongrats()
 			pos %= 2;
 			break;
 		case 13:
-			return ;
+			return !pos;
 		}
 	}
-}
 
-bool cMap::printLevelUp() {
-	if (level.getLevel() == 5)
-	{
-		printCongrats();
-		return false;
-	}
-	else {
-		clrscr();
-		printMap();
-		deleteOldPlayer();
-		gotoXY(15, 15); cout << "******    *******       *******      *******    *******    ******     *******      ###   ###" << endl;
-		gotoXY(15, 16); cout << "**        **     **    **     **   **         **           **         **     *     ###   ###" << endl;
-		gotoXY(15, 17); cout << "**        ** *  **    **       **    ****       ****       ******     **      *    ###   ###" << endl;
-		gotoXY(15, 18); cout << "**        **   **      **     **         **         **     **         **     *     ###   ###" << endl;
-		gotoXY(15, 19); cout << "******    **    **      *******    *****      *****        ******     *******     ::::: ::::: " << endl;
-		gotoXY(35, 21); cout << "Continue ?" << endl;
-		const char *choice[2] = { "<YES>", "<NO>" };
-		int pos = 0, x = 36, y = 22;
-		TextColor(7);
-		/*TextColor(227);
-		gotoXY(x, y);
-		cout << choice[0];
-		TextColor(7);
-
-		TextColor(227);
-		gotoXY(x+10, y);
-		cout << choice[1];
-		TextColor(7);*/
-
-		while (1) {
-			TextColor(7);
-			for (int i = 0; i < 2; i++) {
-				if (i == pos) {
-					TextColor(227);
-					gotoXY(x, y + i);
-					cout << choice[i];
-					TextColor(7);
-				}
-				else {
-					gotoXY(x, y + i);
-					cout << choice[i];
-				}
-			}
-
-			switch (inputKey()) {
-			case 'w':
-				pos--;
-				pos = abs(pos);
-				pos %= 2;
-				break;
-			case 's':
-				pos++;
-				pos %= 2;
-				break;
-			case 13:
-				return !pos;
-			}
-		}
-	}
 }
