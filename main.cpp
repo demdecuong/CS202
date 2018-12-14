@@ -24,7 +24,8 @@ int main() {
 	GetWindowRect(console, &r); //stores the console's current dimensions
 
 	//MoveWindow(window_handle, x, y, width, height, redraw_window);
-	MoveWindow(console, r.left, r.top, 1280, 1024, TRUE);
+	MoveWindow(console, r.left, r.top, 1280, 600, TRUE);
+	FixConsoleWindow();
 	cGame game;
 	//game.getAllFilename("data");
 	game.menu();
