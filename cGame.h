@@ -5,7 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <thread>
-#include <dirent.h>
+//#include <dirent.h>
 
 #include "cConsole.h"
 #include "cPlayer.h"
@@ -34,7 +34,7 @@ public:
 
 	bool continueGame();  //continue our game
 
-	void loadGameMenu(); // get file of cMap map
+	bool loadGameMenu(); // get file of cMap map
 
 	void saveGameMenu(); //void saveGame(); // print file of cMap map
 
@@ -57,6 +57,7 @@ public:
 	vector<string> getAllFilename(const std::string& name);
 
 	void menu();
+
 	bool continueMenu();
 };
 

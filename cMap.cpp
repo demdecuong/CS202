@@ -28,9 +28,7 @@ void cMap::resetMap() {
 	}
 }
 
-void cMap::printMap()
-{
-	//    TextColor(14);
+void cMap::printBorder() {
 	clrscr();
 	gotoXY(0, 0);
 	for (int i = 0; i <= height + 1; ++i) {
@@ -40,6 +38,12 @@ void cMap::printMap()
 		}
 		cout << endl;
 	}
+}
+
+void cMap::printMap()
+{
+	//    TextColor(14);
+	printBorder();
 	//gotoXY(1, height + 10);
 	//cout << "  L = Save Game | T = Load Game | P = Pause Game" << endl;
 
@@ -61,6 +65,7 @@ void cMap::printMap()
 	
 	drawPlayer();
 }
+
 
 void cMap::drawMap() {
 	//resetMap();
@@ -148,7 +153,7 @@ void cMap::initializeNewState() {
 		};
 	}
 	Sleep(200);
-	rowsData.moveToNextState(0);
+	rowsData.redrawState();
 }
 
 void cMap::randomNextState() {
@@ -175,8 +180,7 @@ void cMap::randomNextState() {
 
 void cMap::redrawMap() {
 	printMap();
-	int tmp = rowsData.moveToNextState(0);
-	level.decNEnemy(tmp);
+	rowsData.redrawState();
 	drawMap();
 }
 

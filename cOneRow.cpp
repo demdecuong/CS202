@@ -78,6 +78,29 @@ int cOneRow::moveToNextState(int t) {
 	return nDelete;
 }
 
+void cOneRow::redrawState() {
+	if (redLight) {
+		TextColor(12);
+	}
+	else {
+		TextColor(10);
+	}
+	if (direction)
+	{
+		gotoXY(RIGHTMAP + 60, currentRow);
+	}
+	else
+	{
+		gotoXY(LEFTMAP - 1, currentRow);
+	}
+	cout << (char)254;
+	TextColor(7);
+	for (int i = 0; i < (int)enemy.size(); ++i) {
+		cEnemy * curEnemy = enemy[i];
+		printNewEnemy(curEnemy->getPos(), curEnemy->shape(), curEnemy->getWidth(), curEnemy->getHeight());
+	}
+}
+
 void cOneRow::deleteOldEnemy(cPosition pos, int w, int h) {
 	int X = pos.getX();
 	int Y = pos.getY();

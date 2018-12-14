@@ -30,6 +30,12 @@ int cRows::moveToNextState(int t) {
 	return nDelete;
 }
 
+void cRows::redrawState() {
+	for (int i = 0; i < (int)subRows.size(); ++i) {
+		subRows[i]->redrawState();
+	}
+}
+
 vector <cOneRow*> cRows::listRow() {
 	return subRows;
 }

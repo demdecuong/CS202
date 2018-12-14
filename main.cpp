@@ -27,7 +27,6 @@ int main() {
 	MoveWindow(console, r.left, r.top, 1280, 1024, TRUE);
 	cGame game;
 	//game.getAllFilename("data");
-
 	game.menu();
 	
 
