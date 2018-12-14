@@ -14,12 +14,12 @@ cLevel::cLevel(int level, int nEnemy) {
 
 void cLevel::initialize() {
 	//50 is a BIGGGGG number
-	int difficulty = 150, maxE = 19;
-	if (constantVar::isHard) difficulty = 4, maxE = 28;
+	int difficulty = 50, maxE = 20;
+	if (constantVar::isHard) difficulty = 5, maxE = 40;
 	nRow = 10;
 	maxEnemy = min(maxE, nRow * 10);
-	maxSpeed = difficulty- level * 3;  //speed nho ,toc do thuc nhanh
-	minSpeed = difficulty - level * 2;  
+	maxSpeed = difficulty- level * 2;  //speed nho ,toc do thuc nhanh
+	minSpeed = difficulty - level * 1;  
 }
 
 int cLevel::getLevel() {

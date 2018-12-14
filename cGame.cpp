@@ -4,6 +4,19 @@ void cGame::gameSettings() {
 	system("cls");
 	const char *setting[3] = { "Mode", "Sound", "Menu" };
 	char * currentSettting[3] = { "HARD", "ON", "" };
+	if (constantVar::isHard) {
+		currentSettting[0] = "HARD";
+	}
+	else
+	{
+		currentSettting[0] = "EASY";
+	}
+	if (constantVar::isMute) {
+		currentSettting[1] = "OFF";
+	}
+	else {
+		currentSettting[1] = "ON ";
+	}
 	int pos1 = 0;
 	const int y = 20;
 	const int x = 25;
@@ -53,11 +66,18 @@ void cGame::gameSettings() {
 						toggleHard();
 						if (constantVar::isHard) {
 							currentSettting[0] = "HARD";
+							if (!constantVar::isMute) {
+								PlaySound(TEXT("RING.wav"), NULL, SND_ASYNC);
+								PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
+							}
 						}
 						else
 						{
 							currentSettting[0] = "EASY";
-							if(!constantVar::isMute)PlaySound(TEXT("RING.wav"), NULL, SND_ASYNC);
+							if (!constantVar::isMute) {
+								PlaySound(TEXT("RING.wav"), NULL, SND_ASYNC);
+								PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
+							}
 						}
 						break;
 					}
@@ -70,6 +90,7 @@ void cGame::gameSettings() {
 						else {
 							currentSettting[1] = "ON ";
 							PlaySound(TEXT("RING.wav"), NULL, SND_ASYNC);
+							PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
 						}
 						//flag = 1;
 						break;
