@@ -3,76 +3,47 @@
 void cGame::gameSettings() {
 	system("cls");
 	const char *setting[3] = { "Mode", "Sound", "Menu" };
-	char * currentSettting[3] = { "Hard", "ON", "" };
+	char * currentSettting[3] = { "HARD", "ON", "" };
 	int pos1 = 0;
-	const int y = 10;
-	const int x = 40;
+	const int y = 20;
+	const int x = 25;
 	int flag = 0;
-	while (!flag) {
-		system("cls");
-		int color = rand() % 7 + 9;
-		TextColor(color);
-		/*	cout << "******       *******        **        ******            ******    *******       *******      *******    *******" << endl;
-		cout << "**    **     **   **       ** **      **   **           **        **     **    **     **   **         **" << endl;
-		cout << "** * **      **   **      **   **     **    **          **        ** *  **    **       **    ****       ****" << endl;
-		cout << "**   **      **   **     ** *** **    **   **           **        **   **      **     **         **         **" << endl;
-		cout << "**    **     *******    **       **   ******            ******    **    **      *******    *****      *****" << endl;*/
-		gotoXY(20, 30);
-		cout << " =====  =======   ======   =====  ===== ==== ===       =======" << endl;
-		gotoXY(20, 31);
-		cout << "||     ||     |  ||	   |  ||     ||	     ||	||  \\   | ||  " << endl;
-		gotoXY(20, 32);
-		cout << "||     ||_____|  ||	   |  ||___  ||___   ||	||   \\  | ||   ====  " << endl;
-		gotoXY(20, 33);
-		cout << "||     ||   \\    ||    |       |     |   ||	||    \\ | ||_____||         	" << endl;
-		gotoXY(20, 34);
-		cout << " =========== \\    ======   ===== =====  ==== ======   ======      /\\      ====\\\\" << endl;
-		gotoXY(20, 35);
-		cout << "                                            ||     | ||    |     // \\    ||	   |" << endl;
-		gotoXY(20, 36);
-		cout << "                                            || ====  ||    |    //   \\   ||	   |" << endl;
-		gotoXY(20, 37);
-		cout << "                                            ||   \\\\  ||    |   //  ===\\  ||	   |" << endl;
-		gotoXY(20, 38);
-		cout << "                                            ||    \\\\  ======  //	   \\  ====//" << endl;
-		TextColor(7);
-		TextColor(238);
-		for (int i = 20; i <= 80; i++) {
-			for (int j = y - 5; j <= y + 5; j++) {
-				if (j == y - 5 || j == y + 5 || i == 20 || i == 80) {
-					gotoXY(i, j);
-					cout << "*";
+	int color = rand() % 7 + 9;
+	map.printBorder();
+	bool currentKey = true;
+	while (1) {
+		if (currentKey) {
+			//system("cls");
+			color = rand() % 7 + 9;
+			TextColor(color);
+			drawTitle();
+			//TextColor(7);
+			for (int i = 0; i < 4 - 1; i++) {
+				gotoXY(x, y + i);
+				if (i == pos1) {
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
 				}
-			}
-		}
-		TextColor(7);
-		for (int i = 0; i < 4 - 1; i++) {
-			if (i == pos1) {
-				TextColor(227);
-				gotoXY(x, y + i);
-				cout << setting[i] << " " << currentSettting[i];
-				TextColor(7);
-			}
-			else {
-				gotoXY(x, y + i);
+				else {
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+				}
 				cout << setting[i] << " " << currentSettting[i];
 			}
+			currentKey = false;
 		}
 		while (1) {
-			if (_kbhit()) {
-				char key = _getch();
+			if (kbhit()) {
+				currentKey = true;
+				//system("cls");
+				
+				char key = getch();
 				if (key == 'W' || key == 'w') {
-					if (pos1 > 0)
-						pos1--;
-					else
-						pos1 = 4 - 2;
+					pos1--;
+					pos1 = (pos1 + 3) % 3;
 					break;
 				}
 				if (key == 'S' || key == 's') {
-					if (pos1 < 4 - 1 - 1)
-						pos1++;
-					else
-						pos1 = 0;
+					pos1++;
+					pos1 %= 3;
 					break;
 				}
 				if (key == 13) {
@@ -94,31 +65,35 @@ void cGame::gameSettings() {
 						toggleMute();
 						if (constantVar::isMute) {
 							currentSettting[1] = "OFF";
+							if (constantVar::isMute)PlaySound(NULL("PUBG.wav"), NULL, SND_APPLICATION);
 						}
 						else {
-							currentSettting[1] = "ON";
+							currentSettting[1] = "ON ";
 							PlaySound(TEXT("RING.wav"), NULL, SND_ASYNC);
 						}
 						//flag = 1;
 						break;
 					}
 					case 2: {
+						system("cls");
 						flag = 1;
-						break;
+						return;
 					}
 					}
 					break;
 				}
+
 			}
 		}
-		system("cls");
+		
 	}
-	if (flag == 1) { //???
-		system("cls");
-		bool isFinish = false;
-		cGame::menu(isFinish);
-		//  cGame::drawGame();
-	}
+	//if (flag == 1) { //???
+	//	//system("cls");
+	//	bool isFinish = false;
+	//	menu();
+	//	//  cGame::drawGame();
+	//}
+	return;
 }
 
 void cGame::menu(bool &isFinish) {
@@ -129,48 +104,56 @@ void cGame::menu() {
 	int pos = 0;
 	int x = 35, y = 20;
 	if (!constantVar::isMute)PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
+	bool changeInput = true;
 	while (true) {
-		system("cls");
+		changeInput = true;
+		while (true) {
+			if (changeInput) {
+				//system("cls");
+				map.printBorder();
+				for (int i = 0; i < 4; i++) {
+					gotoXY(x, y + i);
+					if (i == pos)
+					{
+						SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+					}
+					else
+					{
+						SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+					}
+					cout << choice[i] << endl;
+				}
 
-		//TextColor(7);
-		int color = rand() % 7 + 9;
-		TextColor(color);
-		/*	cout << "******       *******        **        ******            ******    *******       *******      *******    *******" << endl;
-		cout << "**    **     **   **       ** **      **   **           **        **     **    **     **   **         **" << endl;
-		cout << "** * **      **   **      **   **     **    **          **        ** *  **    **       **    ****       ****" << endl;
-		cout << "**   **      **   **     ** *** **    **   **           **        **   **      **     **         **         **" << endl;
-		cout << "**    **     *******    **       **   ******            ******    **    **      *******    *****      *****" << endl;*/
-		gotoXY(20, 10); cout << " =====  =======   ======   =====  ===== ==== ===       =======" << endl;
-		gotoXY(20, 11); cout << "||     ||     |  ||	   |  ||     ||	     ||	||  \\   | ||  " << endl;
-		gotoXY(20, 12); cout << "||     ||_____|  ||	   |  ||___  ||___   ||	||   \\  | ||   ====  " << endl;
-		gotoXY(20, 13); cout << "||     ||   \\    ||    |       |     |   ||	||    \\ | ||_____||         	" << endl;
-		gotoXY(20, 14); cout << " =========== \\    ======   ===== =====  ==== ======   ======      /\\      ====\\\\" << endl;
-		gotoXY(20, 15); cout << "                                            ||     | ||    |     // \\    ||	   |" << endl;
-		gotoXY(20, 16); cout << "                                            || ====  ||    |    //   \\   ||	   |" << endl;
-		gotoXY(20, 17); cout << "                                            ||   \\\\  ||    |   //  ===\\  ||	   |" << endl;
-		gotoXY(20, 18); cout << "                                            ||    \\\\  ======  //	   \\  ====//" << endl;
-		TextColor(7);
-		for (int i = 0; i < 4; i++) {
-			gotoXY(x, y + i);
-			if (i == pos)
-			{
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+				//TextColor(7);
+				int color = rand() % 7 + 9;
+				TextColor(color);
+				/*	cout << "******       *******        **        ******            ******    *******       *******      *******    *******" << endl;
+				cout << "**    **     **   **       ** **      **   **           **        **     **    **     **   **         **" << endl;
+				cout << "** * **      **   **      **   **     **    **          **        ** *  **    **       **    ****       ****" << endl;
+				cout << "**   **      **   **     ** *** **    **   **           **        **   **      **     **         **         **" << endl;
+				cout << "**    **     *******    **       **   ******            ******    **    **      *******    *****      *****" << endl;*/
+				gotoXY(20, 10); cout << " =====  =======   ======   =====  ===== ==== ===       =======" << endl;
+				gotoXY(20, 11); cout << "||     ||     |  ||	   |  ||     ||	     ||	||  \\   | ||  " << endl;
+				gotoXY(20, 12); cout << "||     ||_____|  ||	   |  ||___  ||___   ||	||   \\  | ||   ====  " << endl;
+				gotoXY(20, 13); cout << "||     ||   \\    ||    |       |     |   ||	||    \\ | ||_____||         	" << endl;
+				gotoXY(20, 14); cout << " =========== \\    ======   ===== =====  ==== ======   ======      /\\      ====\\\\" << endl;
+				gotoXY(20, 15); cout << "                                            ||     | ||    |     // \\    ||	   |" << endl;
+				gotoXY(20, 16); cout << "                                            || ====  ||    |    //   \\   ||	   |" << endl;
+				gotoXY(20, 17); cout << "                                            ||   \\\\  ||    |   //  ===\\  ||	   |" << endl;
+				gotoXY(20, 18); cout << "                                            ||    \\\\  ======  //	   \\  ====//" << endl;
+				TextColor(7);
 			}
-			else
-			{
-				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-			}
-			cout << choice[i] << endl;
-		}
-		while (true)
-		{
+			changeInput = false;
 			switch (inputKey()) {
+				changeInput = true;
 				PlaySound(TEXT("RING.wav"), NULL, SND_ASYNC);
 			case 'w':
+				changeInput = true;
 				pos--;
-				pos %= 4;
+				pos = (pos + 4) % 4;
 				break;
 			case 's':
+				changeInput = true;
 				pos++;
 				pos %= 4;
 				break;
@@ -180,36 +163,63 @@ void cGame::menu() {
 					while (1) {
 						loading();
 						//if (!constantVar::isMute)PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
-						
+
 						if (newGame()) {
 							Sleep(1000);
 							clrscr();
-							return; // thang nhung k choi tiep
+							changeInput = true;
+							break;//return; // thang nhung k choi tiep
 							Sleep(1000);
 						}
-						if (!continueMenu()) {
+						else if (!continueMenu()) {
+							if (isLoaded) {
+								map.~cMap();
+								new(&map) cMap;
+							}
 							Sleep(1000);
 							clrscr();
-							return; //thua nhung khong choi tiep
+							changeInput = true;
+							break;//return; //thua nhung khong choi tiep
 						}
 					}
 					break;
 				case 1: {
-					Sleep(590);
-					loadGame();
+					Sleep(1000);
+					if (loadGameMenu()) {
+						while (1) {
+							loading();
+							//if (!constantVar::isMute)PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
+
+							if (newGame()) {
+								Sleep(1000);
+								clrscr();
+								changeInput = true;
+								break;//return; // thang nhung k choi tiep
+								Sleep(1000);
+							}
+							else if (!continueMenu()) {
+								Sleep(1000);
+								TextColor(7);
+								clrscr();
+								changeInput = true;
+								break;//return; //thua nhung khong choi tiep
+							}
+						}
+					}
+					else changeInput = true;
 				}break;
 				case 2: {
 					Sleep(500);
 					gameSettings();
+					changeInput = true;
 				}break;
 				case 3:
+					clrscr();
 					return;
 				}
 				break;
 			}
-			break;
 		}
-		Sleep(300);
 	}
 }
 
@@ -260,50 +270,117 @@ bool cGame::continueMenu() {
 
 }
 
+
 bool cGame::newGame() { // start a new game, initialize cMap map
-	map.~cMap();
-	new(&map) cMap();
+	
+	char key;
+	if (!isLoaded) {
+		map.~cMap();
+		new(&map) cMap();
+	}
+	isPausing = false;
 	map.printMap();
-	map.initializeNewState();
+	if(!isLoaded) map.initializeNewState();
+	isLoaded = false;
+
+	const string choice[3] = { "Save Game","Load Game","Quit" };
+	int pos = 0;
 	while (!map.isEnd()) {
 		if (!isPausing) {
 			map.randomNextState();
 		}
+
+		int x = 125, y = 22;
+		if (isPausing) {
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+			gotoXY(125, 19); cout << "PAUSE MENU" << endl;
+			for (int i = 0; i < 3; i++) {
+				gotoXY(x, y + i);
+				if (i == pos)
+				{
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+				}
+				else
+				{
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+				}
+				cout << choice[i] << endl;
+			}
+		}
+			
 		if (kbhit())
 		{
-			char key = getch();
+			key = getch();
 			if (key == 'l')
 			{
 				//Save
 				// call saveGame of cGame to get name of file
-				map.saveGame("minh");
+				saveGameMenu();
 			}
 			if (key == 't')
 			{
-				map.loadGame("minh");
-				newGame();
+				togglePauseGame();
+				loadGameMenu();
+				clrscr();
+				map.redrawMap();
+				togglePauseGame();
+				isLoaded = false;
 			}
 			if (key == 'p')
 			{
 				togglePauseGame();
+				pos = 0; // reset pause menu selection
+				if (!isPausing) { // map.redrawMap();
+					gotoXY(125, 19); cout << "                  " << endl;
+					for (int i = 0; i < 3; i++) {
+						gotoXY(x, y + i);
+						cout << "                 " << endl;
+					}
+				}
 			}
-			if (isPausing) continue;
 			if (key == 'a')
 			{
-				map.updatePosPlayer('a');
+				if (!isPausing) map.updatePosPlayer('a');
 			}
 			if (key == 'w')
 			{
-				map.updatePosPlayer('w');
+				if(!isPausing) map.updatePosPlayer('w');
+				else {
+					pos--;
+					pos = (pos + 3) % 3;
+				}
+
 			}
 			if (key == 's')
 			{
-				map.updatePosPlayer('s');
+				if (!isPausing) map.updatePosPlayer('s');
+				else {
+					pos++;
+					pos %= 3;
+				}
 			}
 			if (key == 'd')
 			{
-				map.updatePosPlayer('d');
+				if (!isPausing) map.updatePosPlayer('d');
 			}
+			if (isPausing && key == 13) {
+				switch (pos) {
+				case 0:
+					saveGameMenu();
+					break;
+				case 1:
+					loadGameMenu();
+					clrscr();
+					map.redrawMap();
+					togglePauseGame();
+					isLoaded = false;
+					break;
+				case 2:
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+					return true;
+				}
+			}
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 			map.drawPlayer();
 			map.drawMap();
 		}
@@ -322,6 +399,127 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 	}
 	return false;
 }
+
+bool cGame::continueGame()
+{
+	char key;
+	isPausing = false;
+	map.printMap();
+	map.initializeNewState();
+	/*
+	gotoXY(125, 5); cout << "CONTROL MANUAL" << endl;
+	gotoXY(125, 6); cout << "[ W ]: UP" << endl;
+	gotoXY(125, 7); cout << "[ S ]: DOWN" << endl;
+	gotoXY(125, 8); cout << "[ A ]: LEFT" << endl;
+	gotoXY(125, 9); cout << "[ D ]: RIGHT" << endl;
+	gotoXY(125, 11); cout << "COMMANDS" << endl;
+	gotoXY(125, 12); cout << "[ L ]: Save game" << endl;
+	gotoXY(125, 13); cout << "[ T ]: Load game" << endl;
+	gotoXY(125, 14); cout << "[ P ]: Pause game/Menu" << endl;
+	*/
+	const string choice[3] = { "Save Game","Load Game","Quit" };
+	int pos = 0;
+	while (!map.isEnd()) {
+		if (!isPausing) {
+			map.randomNextState();
+		}
+
+		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+		gotoXY(125, 19); cout << "PAUSE MENU" << endl;
+		int x = 125, y = 22;
+		for (int i = 0; i < 3; i++) {
+			gotoXY(x, y + i);
+			if (isPausing && i == pos)
+			{
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+			}
+			else
+			{
+				SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+			}
+			cout << choice[i] << endl;
+		}
+
+		if (kbhit())
+		{
+			key = getch();
+			if (key == 'l')
+			{
+				//Save
+				// call saveGame of cGame to get name of file
+				togglePauseGame();
+				saveGameMenu();
+				togglePauseGame();
+			}
+			if (key == 't')
+			{
+				togglePauseGame();
+				loadGameMenu();
+				togglePauseGame();
+			}
+			if (key == 'p')
+			{
+				togglePauseGame();
+				pos = 0; // reset pause menu selection
+			}
+			if (key == 'a')
+			{
+				if (!isPausing) map.updatePosPlayer('a');
+			}
+			if (key == 'w')
+			{
+				if (!isPausing) map.updatePosPlayer('w');
+				else {
+					pos--;
+					pos = (pos + 3) % 3;
+				}
+
+			}
+			if (key == 's')
+			{
+				if (!isPausing) map.updatePosPlayer('s');
+				else {
+					pos++;
+					pos %= 3;
+				}
+			}
+			if (key == 'd')
+			{
+				if (!isPausing) map.updatePosPlayer('d');
+			}
+			if (isPausing && key == 13) {
+				switch (pos) {
+				case 0:
+					saveGameMenu();
+					break;
+				case 1:
+					loadGameMenu();
+					break;
+				case 2:
+					SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+					return true;
+				}
+			}
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+			map.drawPlayer();
+			map.drawMap();
+		}
+		if (map.isWin()) {
+			if (!constantVar::isMute)PlaySound(TEXT("CompleteStage.wav"), NULL, SND_ASYNC);
+			if (map.printLevelUp()) {
+				clrscr();
+				map.nextLevel();
+				map.printMap();
+				map.deleteOldPlayer();
+				map.initializeNewState();
+				map.drawPlayer();
+			}
+			else return true;
+		}
+	}
+	return false;
+}
+
 
 void cGame::loading()
 {
@@ -350,7 +548,7 @@ vector<string> cGame::getAllFilename(const string& name)
 		pattern.append("\\*");
 		std::wstring stemp = std::wstring(pattern.begin(), pattern.end());
 		LPCWSTR sw = stemp.c_str();
-		WIN32_FIND_DATA data;
+		WIN32_FIND_DATA data;					
 		HANDLE hFind;
 		if ((hFind = FindFirstFile(sw, &data)) != INVALID_HANDLE_VALUE) {
 			do {
@@ -369,64 +567,130 @@ vector<string> cGame::getAllFilename(const string& name)
 		return v;
 }
 
-
-void cGame::loadGame() { // get file of cMap map
-	ifstream infile;
-	string file;
-	gotoXY(80 / 2, 20 + 2); //width=115, height=35
-	cout << "Input name to load: " << endl;
-	getline(cin, file);
-	file = file + ".txt";
+bool cGame::loadGameMenu() { // get file of cMap map
+	string filename;
 	clrscr();
-	infile.open(file, ios::in);
-	if (infile.fail()) {
-		gotoXY(115 / 2, 35 / 2);
-		TextColor(ColorCode_Green);
-		cout << "Data does not exist" << endl;
-		TextColor(7);
-		system("pause");
-		clrscr();
-		return;
+	vector <string> files = getAllFilename("data");
+	if (files.size() == 0) {
+		gotoXY(30, 15);
+		cout << "No saved file to load !!!";
+		Sleep(1000);
+		return false;
 	}
-	/*delete[] car;
-	delete[] truck;
-	delete[] bird;
-	delete[] dinausor;
-	infile >> level;
-	car = new cCar[level];
-	truck = new cTruck[level];
-	bird = new cBird[level];
-	dinausor = new cDinausor[level];
-	*/
-	int x, y;
-	infile >> x;
-	infile >> y;
-	/*player.set(x, y);
-	for (int i = 0; i < level; i++) {
-	infile >> x;
-	infile >> y;
-	//   car[i].set(x, y);
+	int curPos = 0;
+	clrscr();
+	map.printBorder();
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 13);
+	gotoXY(15, 5); cout << "**      *******      ****     *******" << endl;
+	gotoXY(15, 6); cout << "**     **     **    **  **    **     *" << endl;
+	gotoXY(15, 7); cout << "**     **     **   ********   **      * **     ** ******** **    ** **    **" << endl;
+	gotoXY(15, 8); cout << "****** **     **  **********  **     *  ** * * ** **       ** *  ** **    **" << endl;
+	gotoXY(15, 9); cout << "******  *******  **        ** *******   **  *  ** *******  **  * ** **    **" << endl;
+	gotoXY(15, 10); cout << "                                        **     ** **       **   *** **    **" << endl;
+	gotoXY(15, 11); cout << "                                        **     ** ******** **    ** ********" << endl;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+	gotoXY(30, 13); cout << "<Press ESC to escape...>";
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+	gotoXY(30, 15);
+	cout << "Choose Filename to load: ";
+
+	for (int i = 0; i < (int)files.size(); ++i) {
+		if (i == curPos) {
+			gotoXY(26, 16 + i);
+			cout << ">> ";
+		}
+		gotoXY(30, 16 + i);
+		cout << files[i] << endl;
 	}
-	for (int i = 0; i < level; i++)
-	{
-	infile >> x;
-	infile >> y;
-	//  truck[i].set(x, y);
+	while (true) {
+		if (kbhit())
+		{
+			char key=getch();
+			if (key == 'w')
+			{
+				gotoXY(26, 16 + curPos);
+				cout << "    " << files[curPos];
+				curPos--;
+				curPos = (curPos + files.size()) % files.size();
+				gotoXY(26, 16 + curPos);
+				cout << ">>  " << files[curPos];
+			}
+			if (key == 's')
+			{
+				gotoXY(26, 16 + curPos);
+				cout << "    " << files[curPos];
+				curPos++;
+				curPos = (curPos + files.size()) % files.size();
+				gotoXY(26, 16 + curPos);
+				cout << ">>  " << files[curPos];
+			}
+			if (key == 13)
+			{
+				isLoaded = true;
+				map.loadGame(files[curPos]);
+				clrscr();
+				//map.redrawMap();
+				return true;
+			}
+			if (key == 27)
+			{
+				clrscr();
+				//map.redrawMap();
+				return false;
+			}
+		}
+		Sleep(200);
 	}
-	for (int i = 0; i < level; i++)
-	{
-	infile >> x;
-	infile >> y;
-	//   bird[i].set(x, y);
+}
+
+void cGame::saveGameMenu() { // get file of cMap ma
+	string filename;
+	clrscr();
+	map.printBorder();
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
+	gotoXY(15, 5); cout << "*******        **** **    ** ******* " << endl;
+	gotoXY(15, 6); cout << " **          **  **  **   ** ** " << endl;
+	gotoXY(15, 7); cout << "   **      ********   **  ** *******    **     ** ******** **    ** **    **  " << endl;
+	gotoXY(15, 8); cout << "     **   **     **    ** ** **         ** * * ** **       ** *  ** **    ** " << endl;
+	gotoXY(15, 9); cout << "******   *       **     **** *******    **  *  ** *******  **  * ** **    **  " << endl;
+	gotoXY(15, 10); cout << "                                        **     ** **       **   *** **    **   " << endl;
+	gotoXY(15, 11); cout << "                                        **     ** ******** **    ** ********  " << endl;
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+	gotoXY(15, 20);
+	cout << "<Press ESC to escape>";
+	map.deleteOldPlayer();
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
+	gotoXY(15, 15);
+	cout << "Input file name to save: ";
+	//getline(cin, filename);
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+	char key;
+	while ((key = getch()) != 27 ) {
+		switch (key) {
+		case '\b':
+			if (filename.size() != 0) {
+				filename.pop_back();
+				gotoXY(50, 15);
+				cout << "                                                 ";
+				gotoXY(50, 15);
+				cout << filename;
+			}
+			break;
+		case 13:
+			map.saveGame(filename);
+			break;
+		default:
+			filename.push_back(key);
+			gotoXY(50, 15);
+			cout << filename;
+		}
+		if (key == 13) break;
 	}
-	for (int i = 0; i < level; i++)
-	{
-	infile >> x;
-	infile >> y;
-	//   dinausor[i].set(x, y);
-	}
-	*/
-	infile.close();
+	clrscr();
+	map.redrawMap();
+	//isPausing = false;
+	//file = file + ".txt";
+	//map.saveGame(filename);
 }
 
 void cGame::togglePauseGame() { // toggle status of isPausing

@@ -40,6 +40,25 @@ void cMap::printMap()
 		}
 		cout << endl;
 	}
+	//gotoXY(1, height + 10);
+	//cout << "  L = Save Game | T = Load Game | P = Pause Game" << endl;
+
+	gotoXY(125, 1); cout << "<Crossing Road Game>";
+	/*gotoXY(15, 5); cout << "**** **** **** ***  ***  ** **   *  *****     *******      ###   ###" << endl;
+	gotoXY(15, 6); cout << "*    ***  *  *   **   ** ** ** * *  *  **       **     *     ###   ###" << endl;
+	gotoXY(15, 7); cout << "**** *  * **** **   **   ** **  **  *****    ******     **      *    ###   ###" << endl;*/
+	
+	gotoXY(125, 3); cout << "LV. " << level.getLevel() << endl;
+	gotoXY(125, 5); cout << "CONTROL MANUAL" << endl;
+	gotoXY(125, 6); cout << "[ W ]: UP" << endl;
+	gotoXY(125, 7); cout << "[ S ]: DOWN" << endl;
+	gotoXY(125, 8); cout << "[ A ]: LEFT" << endl;
+	gotoXY(125, 9); cout << "[ D ]: RIGHT" << endl;
+	gotoXY(125, 11); cout << "COMMANDS" << endl;
+	gotoXY(125, 12); cout << "[ L ]: Save game" << endl;
+	gotoXY(125, 13); cout << "[ T ]: Load game" << endl;
+	gotoXY(125, 14); cout << "[ P ]: Pause game/Menu" << endl;
+	
 	drawPlayer();
 }
 
@@ -154,6 +173,13 @@ void cMap::randomNextState() {
 	drawMap();
 }
 
+void cMap::redrawMap() {
+	printMap();
+	int tmp = rowsData.moveToNextState(t);
+	level.decNEnemy(tmp);
+	drawMap();
+}
+
 void cMap::updatePosPlayer(char moving) {
 	deleteOldPlayer();
 	if (moving == 'a' || moving == 'A') player.Left();
@@ -169,8 +195,10 @@ bool cMap::isEnd()
 }
 bool cMap::isWin()
 {
-	if (player.getX() == 1)
+	if (player.getX() == 1) {
+		if (!constantVar::isMute)PlaySound(TEXT("CompleteStage.wav"), NULL, SND_ASYNC);
 		return true;
+	}
 	return false;
 }
 
@@ -244,7 +272,7 @@ void cMap::saveGame(string file)
 }
 
 bool cMap::loadGame(string file) {
-	ifstream infile("./data/" + file + ".bin", ios::in | ios::binary);
+	ifstream infile("./data/" + file, ios::in | ios::binary);
 	if (!infile.is_open()) {
 		return false;
 	}
@@ -254,7 +282,8 @@ bool cMap::loadGame(string file) {
 	int playerX, playerY;
 	playerX = readInt(infile);
 	playerY = readInt(infile);
-	player = cPlayer(cPosition(playerX, playerY));
+	player.~cPlayer();
+	new(&player) cPlayer(cPosition(playerX, playerY));
 
 	int nEnemy = 0;
 
@@ -279,24 +308,28 @@ bool cMap::loadGame(string file) {
 			eY = readInt(infile);
 			eType = readInt(infile);
 			rowsData.pushEnemy(i, level.getNewEnemy(cPosition(eX, eY), eType));
+			//Print enemy ?
 		}
 	}
 	infile.close();
 	return true;
 }
 
-bool cMap::printLevelUp() {
+void cMap::printCongrats()
+{
 	clrscr();
-	printMap();
+	printMap();	
 	deleteOldPlayer();
-	gotoXY(15, 15); cout << "******    *******       *******      *******    *******    ******     *******      ###   ###" << endl;
-	gotoXY(15, 16); cout << "**        **     **    **     **   **         **           **         **     *     ###   ###" << endl;
-	gotoXY(15, 17); cout << "**        ** *  **    **       **    ****       ****       ******     **      *    ###   ###" << endl;
-	gotoXY(15, 18); cout << "**        **   **      **     **         **         **     **         **     *     ###   ###" << endl;
-	gotoXY(15, 19); cout << "******    **    **      *******    *****      *****        ******     *******     ::::: ::::: " << endl;
-	gotoXY(35, 21); cout << "Continue ?" << endl;
-	const char *choice[2] = { "<YES>", "<NO>" };
-	int pos = 0, x = 36, y = 22;
+	if (!constantVar::isMute)PlaySound(TEXT("CompleteStage.wav"), NULL, SND_ASYNC);
+	gotoXY(15, 15); cout << "_________                                              __            ._." << endl;
+	gotoXY(15, 16); cout << "\\_   ___ \\   ____    ____      ____  _______ _____   _/  |_   ______ | |" << endl;
+	gotoXY(15, 17); cout << "/    \\  \\/  /  _ \\  /    \\   / ___\\ \\_  __ \\__    \\  \\   __\\ /  ___/ | |" << endl;
+	gotoXY(15, 18); cout << "\\     \\____(  <_> )|   |  \\ //_ / > |  | \\/ / __ \\_|  |      \\___\\   \\ | " << endl;
+	gotoXY(15, 19); cout << " \\______  / \\____/ |___|  / \\___  /  |__|   (____  /  |__|  /____  >  __" << endl;
+	gotoXY(15, 20); cout << "        \\/              \\/ /_____/               \\/              \\/   \\/" << endl;
+	gotoXY(35, 22); cout << "Exit ?" << endl;
+	const char *choice[2] = { "<YES>", "<OF COURSE>" };
+	int pos = 0, x = 36, y = 23;
 	TextColor(7);
 	/*TextColor(227);
 	gotoXY(x, y);
@@ -326,6 +359,7 @@ bool cMap::printLevelUp() {
 		switch (inputKey()) {
 		case 'w':
 			pos--;
+			pos = abs(pos);
 			pos %= 2;
 			break;
 		case 's':
@@ -333,8 +367,81 @@ bool cMap::printLevelUp() {
 			pos %= 2;
 			break;
 		case 13:
-			return !pos;
+			return ;
 		}
 	}
+}
 
+bool cMap::printLevelUp() {
+	if (level.getLevel() == 5)
+	{
+		printCongrats();
+		return false;
+	}
+	else {
+		clrscr();
+		printMap();
+		deleteOldPlayer();
+		gotoXY(15, 15); cout << "******    *******       *******      *******    *******    ******     *******      ###   ###" << endl;
+		gotoXY(15, 16); cout << "**        **     **    **     **   **         **           **         **     *     ###   ###" << endl;
+		gotoXY(15, 17); cout << "**        ** *  **    **       **    ****       ****       ******     **      *    ###   ###" << endl;
+		gotoXY(15, 18); cout << "**        **   **      **     **         **         **     **         **     *     ###   ###" << endl;
+		gotoXY(15, 19); cout << "******    **    **      *******    *****      *****        ******     *******     ::::: ::::: " << endl;
+		gotoXY(35, 21); cout << "Continue ?" << endl;
+		const char *choice[2] = { "<YES>", "<NO>" };
+		int pos = 0, x = 36, y = 22;
+		TextColor(7);
+		/*TextColor(227);
+		gotoXY(x, y);
+		cout << choice[0];
+		TextColor(7);
+
+		TextColor(227);
+		gotoXY(x+10, y);
+		cout << choice[1];
+		TextColor(7);*/
+
+		while (1) {
+			TextColor(7);
+			for (int i = 0; i < 2; i++) {
+				if (i == pos) {
+					TextColor(227);
+					gotoXY(x, y + i);
+					cout << choice[i];
+					TextColor(7);
+				}
+				else {
+					gotoXY(x, y + i);
+					cout << choice[i];
+				}
+			}
+
+			switch (inputKey()) {
+			case 'w':
+				pos--;
+				pos = abs(pos);
+				pos %= 2;
+				break;
+			case 's':
+				pos++;
+				pos %= 2;
+				break;
+			case 13:
+				return !pos;
+			}
+		}
+	}
+}
+
+void cMap::printBorder()
+{
+	clrscr();
+	gotoXY(0, 0);
+	for (int i = 0; i <= height + 1; ++i) {
+		cout << "  ";
+		for (int j = 0; j <= width + 1; ++j) {
+			cout << map[i][j];
+		}
+		cout << endl;
+	}
 }

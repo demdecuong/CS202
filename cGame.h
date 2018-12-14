@@ -5,7 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <thread>
-#include <dirent.h>
+//#include <dirent.h>
 
 #include "cConsole.h"
 #include "cPlayer.h"
@@ -16,7 +16,8 @@
 using namespace std;
 
 class cGame
-{
+{	
+	bool isLoaded = false;
 	cMap map;
 	bool isPausing = false;
 public:
@@ -31,9 +32,13 @@ public:
 
 	bool newGame(); // start a new game, initialize cMap map
 
-	void loadGame(); // get file of cMap map
+	bool continueGame();  //continue our game
 
-					 //void saveGame(); // print file of cMap map
+	bool loadGameMenu(); // get file of cMap map
+
+	void saveGameMenu(); //void saveGame(); // print file of cMap map
+
+	void pauseMenu(int cmd);
 
 	void togglePauseGame(); // toggle status of isPausing
 
@@ -52,6 +57,7 @@ public:
 	vector<string> getAllFilename(const std::string& name);
 
 	void menu();
+
 	bool continueMenu();
 };
 

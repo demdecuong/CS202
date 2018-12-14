@@ -18,6 +18,8 @@ public:
 	vector <cEnemy*> listEnemy(); // return all enemies from all rowsgit ad
 	vector <cOneRow*> listRow();
 	int moveToNextState(int t);
+	void redrawState();
+
 };
 
 #endif // cRows

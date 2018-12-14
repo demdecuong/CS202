@@ -1,5 +1,29 @@
 #include "cOneRow.h"
 
+
+void cOneRow::redrawState() {
+	if (redLight) {
+		TextColor(12);
+	}
+	else {
+		TextColor(10);
+	}
+	if (direction)
+	{
+		gotoXY(RIGHTMAP + 60, currentRow);
+	}
+	else
+	{
+		gotoXY(LEFTMAP - 1, currentRow);
+	}
+	cout << (char)254;
+	TextColor(7);
+	for (int i = 0; i < (int)enemy.size(); ++i) {
+		cEnemy * curEnemy = enemy[i];
+		printNewEnemy(curEnemy->getPos(), curEnemy->shape(), curEnemy->getWidth(), curEnemy->getHeight());
+	}
+}
+
 cOneRow::cOneRow(int speed, bool direction, bool redLight, int currentRow) {
 	this->speed = speed;
 	this->direction = direction;
@@ -33,25 +57,25 @@ int cOneRow::moveToNextState(int t) {
 	if ((redLight && (rand() % 8 == 0)) || (!redLight && (rand() % 15 == 0)) || (t == 0)) {
 		toggleRedLight();
 		// Display Traffic Light
-		if (redLight) {
-			TextColor(12);
-		}
-		else {
-			TextColor(10);
-		}
-		if (direction)
-		{
-			gotoXY(RIGHTMAP + 60, currentRow);
-		}
-		else
-		{
-			gotoXY(LEFTMAP - 1, currentRow);
-		}
-		cout << (char)254;
-		TextColor(7);
 		//
 	}
-	if (((t % speed) != 0) && t != 0) return nDelete;
+	if (redLight) {
+		TextColor(12);
+	}
+	else {
+		TextColor(10);
+	}
+	if (direction)
+	{
+		gotoXY(RIGHTMAP + 60, currentRow);
+	}
+	else
+	{
+		gotoXY(LEFTMAP - 1, currentRow);
+	}
+	cout << (char)254;
+	TextColor(7);
+	if (((t % speed) != 0) && t != 0) return nDelete; //test
 	if (redLight) return nDelete;
 	vector <cEnemy*> newEnemy;
 	newEnemy.reserve(100);
@@ -61,7 +85,8 @@ int cOneRow::moveToNextState(int t) {
 		if (direction) dy = 1;
 		deleteOldEnemy(curEnemy->getPos(), curEnemy->getWidth(), curEnemy->getHeight());
 		curEnemy->updatePosition(0, dy);
-		bool canPrint = printNewEnemy(curEnemy->getPos(), curEnemy->shape(), curEnemy->getWidth(), curEnemy->getHeight());
+		// Print Enemy
+		bool canPrint = printNewEnemy(curEnemy->getPos(), curEnemy->shape(), curEnemy->getWidth(), curEnemy->getHeight()); 
 		if (!canPrint) {
 			curEnemy->goOutMap();
 			++nDelete;
@@ -76,6 +101,7 @@ int cOneRow::moveToNextState(int t) {
 	enemy = newEnemy;
 	return nDelete;
 }
+
 
 void cOneRow::deleteOldEnemy(cPosition pos, int w, int h) {
 	int X = pos.getX();
@@ -101,7 +127,6 @@ bool cOneRow::printNewEnemy(cPosition pos, char ** shape, int w, int h) {
 			cout << shape[i][j - max(1, Y)];
 		}
 	}
-	//Sleep(200);
 	return 1;
 }
 
