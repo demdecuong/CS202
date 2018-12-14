@@ -357,6 +357,7 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 			{
 				togglePauseGame();
 				loadGameMenu();
+				loading();
 				clrscr();
 				map.redrawMap();
 				togglePauseGame();
@@ -406,6 +407,7 @@ bool cGame::newGame() { // start a new game, initialize cMap map
 					break;
 				case 1:
 					loadGameMenu();
+					loading();
 					clrscr();
 					map.redrawMap();
 					togglePauseGame();
