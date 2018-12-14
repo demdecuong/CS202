@@ -26,6 +26,7 @@ int main() {
 	//MoveWindow(window_handle, x, y, width, height, redraw_window);
 	MoveWindow(console, r.left, r.top, 1280, 600, TRUE);
 	FixConsoleWindow();
+	MoveWindow(console, r.left, r.top, 1280, 1024, TRUE);
 	cGame game;
 	//game.getAllFilename("data");
 	game.menu();

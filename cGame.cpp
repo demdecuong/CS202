@@ -98,6 +98,7 @@ void cGame::gameSettings() {
 					case 2: {
 						system("cls");
 						flag = 1;
+						SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 						return;
 					}
 					}
@@ -128,10 +129,11 @@ void cGame::menu() {
 	bool changeInput = true;
 	while (true) {
 		changeInput = true;
+		map.printBorder();
 		while (true) {
 			if (changeInput) {
 				//system("cls");
-				map.printBorder();
+				//map.printBorder();
 				for (int i = 0; i < 4; i++) {
 					gotoXY(x, y + i);
 					if (i == pos)
@@ -188,6 +190,7 @@ void cGame::menu() {
 						if (newGame()) {
 							Sleep(1000);
 							clrscr();
+							map.printBorder();
 							changeInput = true;
 							break;//return; // thang nhung k choi tiep
 							Sleep(1000);
@@ -199,6 +202,7 @@ void cGame::menu() {
 							}
 							Sleep(1000);
 							clrscr();
+							map.printBorder();
 							changeInput = true;
 							break;//return; //thua nhung khong choi tiep
 						}
@@ -214,6 +218,7 @@ void cGame::menu() {
 							if (newGame()) {
 								Sleep(1000);
 								clrscr();
+								map.printBorder();
 								changeInput = true;
 								break;//return; // thang nhung k choi tiep
 								Sleep(1000);
@@ -222,17 +227,22 @@ void cGame::menu() {
 								Sleep(1000);
 								TextColor(7);
 								clrscr();
+								map.printBorder();
 								changeInput = true;
 								break;//return; //thua nhung khong choi tiep
 							}
 						}
 					}
-					else changeInput = true;
+					else {
+						changeInput = true;
+						map.printBorder();
+					}
 				}break;
 				case 2: {
 					Sleep(500);
 					gameSettings();
 					changeInput = true;
+					map.printBorder();
 				}break;
 				case 3:
 					clrscr();
