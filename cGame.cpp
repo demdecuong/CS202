@@ -130,6 +130,7 @@ void cGame::menu() {
 	while (true) {
 		changeInput = true;
 		map.printBorder();
+		if (!constantVar::isMute)PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
 		while (true) {
 			if (changeInput) {
 				//system("cls");
@@ -191,6 +192,7 @@ void cGame::menu() {
 							Sleep(1000);
 							clrscr();
 							map.printBorder();
+							if (!constantVar::isMute)PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
 							changeInput = true;
 							break;//return; // thang nhung k choi tiep
 							Sleep(1000);
@@ -203,6 +205,7 @@ void cGame::menu() {
 							Sleep(1000);
 							clrscr();
 							map.printBorder();
+							if (!constantVar::isMute)PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
 							changeInput = true;
 							break;//return; //thua nhung khong choi tiep
 						}
@@ -219,6 +222,7 @@ void cGame::menu() {
 								Sleep(1000);
 								clrscr();
 								map.printBorder();
+								if (!constantVar::isMute)PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
 								changeInput = true;
 								break;//return; // thang nhung k choi tiep
 								Sleep(1000);
@@ -228,6 +232,7 @@ void cGame::menu() {
 								TextColor(7);
 								clrscr();
 								map.printBorder();
+								if (!constantVar::isMute)PlaySound(TEXT("PUBG.wav"), NULL, SND_ASYNC);
 								changeInput = true;
 								break;//return; //thua nhung khong choi tiep
 							}
