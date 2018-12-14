@@ -156,23 +156,35 @@ bool cPlayer::checkIsDead() {
 
 bool cPlayer::crash(cPosition pos, int w, int h) {
 	int magicConst = 3;
-	if (w == 5) magicConst = 3;
-	if (w == 3) { 
-		magicConst = 1; 
-		if (this->getX() == pos.getX())
-		{
-			if (this->getY() >= pos.getY() && pos.getY() + w -  magicConst >=  this->getY()) // crash while bird of left
+	if (w == 5) {
+		//crash while Car/Truck on the right
+		magicConst = 3;
+		if (this->getX() == pos.getX()) {
+			if (this->getY() <= pos.getY() && max(getY(), pos.getY()) <= min(getY() + getWidth() - magicConst, pos.getY() + w - magicConst))
 			{
 				return true;
 			}
-			if (getY() <= pos.getY() && pos.getY() - getY() <= 2) //crash while bird of right
+			if (this->getY() >= pos.getY() && getY() - pos.getY() <= 3)
 				return true;
 		}
-	}else
-	if (this->getX() == pos.getX() && max(getY(), pos.getY()) <= min(getY() + getWidth() - magicConst, pos.getY() + w - magicConst)) {
-		return true;
 	}
-	return false;
+		if (w == 3) {
+			magicConst = 1;
+			if (this->getX() == pos.getX())
+			{
+				if (this->getY() >= pos.getY() && pos.getY() + w - magicConst >= this->getY()) // crash while bird on the left
+				{
+					return true;
+				}
+				if (getY() <= pos.getY() && pos.getY() - getY() <= 2) //crash while bird on the right
+					return true;
+			}
+		}
+		else
+			if (this->getX() == pos.getX() && max(getY(), pos.getY()) <= min(getY() + getWidth() - magicConst, pos.getY() + w - magicConst)) {
+				return true;
+			}
+		return false;
 }
 
 void cPlayer::sound()
